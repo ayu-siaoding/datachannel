@@ -38,9 +38,25 @@ _CODE_LIKE_COLUMNS = ["代码", "股票代码", "symbol", "营业部代码"]
 
 
 def _read_cache(path: Path) -> pd.DataFrame:
-    header = pd.read_csv(path, nrows=0).columns.tolist()
+    try:
+        header = pd.read_csv(path, nrows=0).columns.tolist()
+    except pd.errors.EmptyDataError:
+        # 对应之前缓存的"无数据"结果（非交易日/节假日/数据尚未发布），直接返回空表。
+        return pd.DataFrame()
     dtype = {col: str for col in header if col in _CODE_LIKE_COLUMNS}
     return pd.read_csv(path, dtype=dtype or None)
+
+
+def _looks_like_no_data_error(exc: Exception) -> bool:
+    """识别 akshare 在"当天/当期确实没有数据"（非交易日、节假日、当天数据尚未发布）时
+    抛出的内部解析异常。
+
+    akshare 的部分接口（例如 stock_lhb_detail_em）在没有数据时不会返回空 DataFrame，
+    而是在内部对 None 做索引/切片时抛出 TypeError，报错信息形如
+    "'NoneType' object is not subscriptable"。这种情况重试没有意义（数据确实不存在），
+    应当直接当作"空结果"处理，而不是当成网络故障不断重试、最终让整个报告任务失败。
+    """
+    return isinstance(exc, TypeError) and "NoneType" in str(exc)
 
 
 def _cached_call(
@@ -74,6 +90,11 @@ def _cached_call(
             df.to_csv(path, index=False)
             return df
         except Exception as exc:  # noqa: BLE001 - 网络接口异常类型不固定
+            if _looks_like_no_data_error(exc):
+                logger.info("获取 %s(%s) 无数据（很可能是非交易日/节假日/数据尚未发布）", name, key)
+                empty = pd.DataFrame()
+                empty.to_csv(path, index=False)
+                return empty
             last_err = exc
             logger.warning("获取 %s(%s) 失败，第 %d 次重试: %s", name, key, attempt, exc)
             time.sleep(1.5 * attempt)

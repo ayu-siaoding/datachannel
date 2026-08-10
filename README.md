@@ -4,7 +4,8 @@ a few tools
 ## lhb_tracker
 
 A股龙虎榜 / 游资席位 / 涨跌停博弈跟踪分析小工具，基于 akshare（东方财富数据源）。
-详见 [`lhb_tracker/README.md`](lhb_tracker/README.md)。
+支持每日自动生成综合报告（见 [`.github/workflows/daily_lhb_report.yml`](.github/workflows/daily_lhb_report.yml)，
+输出到 [`reports/`](reports/) 目录）。详见 [`lhb_tracker/README.md`](lhb_tracker/README.md)。
 
 ## docs
 

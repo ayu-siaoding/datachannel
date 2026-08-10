@@ -1,0 +1,57 @@
+name: Daily LHB Report
+
+# 每个 A股交易日收盘后自动生成龙虎榜/游资席位/涨跌停博弈报告，并提交到 reports/ 目录。
+#
+# 定时规则说明：
+# - cron 用的是 UTC 时间，'0 9 * * 1-5' 对应北京时间周一至周五 17:00（A股 15:00 收盘后留出
+#   缓冲时间，确保东方财富接口数据已经更新）。
+# - cron 无法感知节假日，遇到法定节假日当天 lhb_tracker 会检测到"无龙虎榜数据"并自动跳过，
+#   不会生成空报告、也不会报错。
+# - 也支持在 GitHub Actions 页面手动触发（workflow_dispatch），可指定任意历史日期补生成报告。
+on:
+  schedule:
+    - cron: "0 9 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "指定日期 YYYYMMDD（留空则取运行当天，北京时间）"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-lhb-report
+  cancel-in-progress: false
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate daily report
+        run: python -m lhb_tracker.cli report --date "${{ github.event.inputs.date }}"
+
+      - name: Commit report if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/
+          if git diff --cached --quiet; then
+            echo "无新报告需要提交（可能是非交易日/节假日，或报告内容未变化）。"
+          else
+            git commit -m "chore: 自动生成每日龙虎榜报告 $(date -u +'%Y-%m-%d')"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

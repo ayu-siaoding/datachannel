@@ -6,6 +6,7 @@
     python -m lhb_tracker.cli stock --code 000001 --start 20260701 --end 20260807
     python -m lhb_tracker.cli zt --date 20260807
     python -m lhb_tracker.cli seats --start 20260701 --end 20260807
+    python -m lhb_tracker.cli report --date 20260807
 """
 
 from __future__ import annotations
@@ -16,7 +17,7 @@ import sys
 
 import pandas as pd
 
-from . import analysis
+from . import analysis, report
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", 220)
@@ -61,6 +62,15 @@ def cmd_zt(args: argparse.Namespace) -> None:
         print(f"\n[已保存到 {args.out}]")
 
 
+def cmd_report(args: argparse.Namespace) -> None:
+    report.generate_and_save(
+        date=args.date,
+        outdir=args.outdir,
+        top_n=args.top,
+        seat_lookback_days=args.seat_lookback_days,
+    )
+
+
 def cmd_seats(args: argparse.Namespace) -> None:
     df = analysis.seat_activity_ranking(args.start, args.end, top_n=args.top)
     if df.empty:
@@ -96,6 +106,13 @@ def build_parser() -> argparse.ArgumentParser:
     p_zt.add_argument("--date", required=True, help="YYYYMMDD 或 YYYY-MM-DD，仅支持最近约30个交易日")
     p_zt.add_argument("--out", help="保存 Markdown 报告到指定文件")
     p_zt.set_defaults(func=cmd_zt)
+
+    p_report = sub.add_parser("report", help="生成每日综合 Markdown 报告（龙虎榜+涨跌停+活跃席位），供定时任务调用")
+    p_report.add_argument("--date", default="", help="YYYYMMDD，留空则取北京时间当天")
+    p_report.add_argument("--outdir", default=str(report.DEFAULT_REPORT_DIR), help="报告输出目录，默认 reports/")
+    p_report.add_argument("--top", type=int, default=15, help="榜单展示条数，默认 15")
+    p_report.add_argument("--seat-lookback-days", type=int, default=5, help="活跃席位排行回看天数，默认 5")
+    p_report.set_defaults(func=cmd_report)
 
     p_seats = sub.add_parser("seats", help="区间内活跃营业部排行，并打上已知游资/机构/北向标签")
     p_seats.add_argument("--start", required=True, help="起始日期 YYYYMMDD")
