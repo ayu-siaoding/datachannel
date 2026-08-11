@@ -1,0 +1,141 @@
+# 知名营业部/席位映射（经验库，需持续人工校对）
+# type: hot_money | institution | northbound | quant | unknown
+# style: 打板 | 趋势 | 接力 | 低吸 | 机构配置 | 北向 | 量化
+
+seats:
+  - keywords: ["华鑫证券", "上海分公司"]
+    alias: "赵老哥系"
+    type: hot_money
+    style: 打板
+    note: "高频上榜，偏强势短线"
+
+  - keywords: ["国泰君安", "江苏路"]
+    alias: "章盟主"
+    type: hot_money
+    style: 趋势
+    note: "偏好主线龙头与趋势"
+
+  - keywords: ["国泰海通", "江苏路"]
+    alias: "章盟主(海通)"
+    type: hot_money
+    style: 趋势
+    note: "国君海通合并后名称变体"
+
+  - keywords: ["中信证券", "溧阳路"]
+    alias: "溧阳路"
+    type: hot_money
+    style: 打板
+    note: "经典游资席位"
+
+  - keywords: ["东方财富", "拉萨", "东环路"]
+    alias: "拉萨东环"
+    type: hot_money
+    style: 接力
+    note: "东财系活跃席位"
+
+  - keywords: ["东方财富", "拉萨", "团结路"]
+    alias: "拉萨团结"
+    type: hot_money
+    style: 接力
+    note: "东财系活跃席位"
+
+  - keywords: ["东方财富", "山南", "香曲东路"]
+    alias: "山南香曲东路"
+    type: hot_money
+    style: 接力
+    note: "东财系高频席位"
+
+  - keywords: ["东方财富", "拉萨", "金融城南环路"]
+    alias: "拉萨南环路"
+    type: hot_money
+    style: 接力
+    note: "东财系高频席位"
+
+  - keywords: ["中国银河", "绍兴"]
+    alias: "绍兴帮"
+    type: hot_money
+    style: 打板
+    note: "短线活跃"
+
+  - keywords: ["华泰证券", "深圳", "益田路", "荣超"]
+    alias: "华泰深圳益田路"
+    type: hot_money
+    style: 打板
+    note: "华南活跃席位"
+
+  - keywords: ["财通证券", "杭州", "上塘路"]
+    alias: "财通上塘路"
+    type: hot_money
+    style: 打板
+    note: "浙江活跃席位"
+
+  - keywords: ["国泰君安", "南京", "太平南路"]
+    alias: "南京帮"
+    type: hot_money
+    style: 打板
+    note: "经典游资席位"
+
+  - keywords: ["国泰海通", "南京", "太平南路"]
+    alias: "南京帮(海通)"
+    type: hot_money
+    style: 打板
+    note: "国君海通合并后名称变体"
+
+  - keywords: ["中信证券", "杭州", "延安路"]
+    alias: "杭州延安路"
+    type: hot_money
+    style: 打板
+    note: "浙江活跃席位"
+
+  - keywords: ["浙商证券", "永康", "望春西路"]
+    alias: "浙商永康"
+    type: hot_money
+    style: 打板
+    note: "近期活跃席位"
+
+  - keywords: ["中信建投", "安徽分公司"]
+    alias: "中信建投安徽"
+    type: hot_money
+    style: 趋势
+    note: "分公司席位，常有大额参与"
+
+  - keywords: ["国信证券", "浙江互联网"]
+    alias: "国信浙江互联网"
+    type: hot_money
+    style: 量化
+    note: "偏量化/互联网席位特征"
+
+  - keywords: ["高盛", "世纪大道"]
+    alias: "高盛世纪大道"
+    type: institution
+    style: 机构配置
+    note: "外资机构通道特征"
+
+  - keywords: ["机构专用"]
+    alias: "机构专用"
+    type: institution
+    style: 机构配置
+    note: "交易所披露的机构席位汇总"
+
+  - keywords: ["深股通专用"]
+    alias: "深股通"
+    type: northbound
+    style: 北向
+    note: "北向资金深圳通道"
+
+  - keywords: ["沪股通专用"]
+    alias: "沪股通"
+    type: northbound
+    style: 北向
+    note: "北向资金上海通道"
+
+  - keywords: ["联储证券", "陕西分公司"]
+    alias: "联储陕西"
+    type: hot_money
+    style: 打板
+    note: "活跃席位"
+
+default:
+  type: unknown
+  style: 未知
+  alias: null
