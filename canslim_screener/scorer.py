@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from .config import CanslimThresholds, ScoreWeights
+from .config import CanslimThresholds, ScoreWeights, ThemeThresholds, ThemeWeights
 from .market import analyze_market, market_score
 from .models import DimensionScore, MarketSnapshot, StockRecord, StockScore, TdxResponse
 from .parser import find_numeric_field, rows_to_records
 from .queries import Dimension
+from .theme_cycle import ThemeCycleSnapshot, analyze_theme_market
+from .theme_scorer import _score_ec, _score_lg, _score_tc, coarse_filter_stock
 
 
 def _index_by_code(records: list[StockRecord]) -> dict[str, StockRecord]:
@@ -275,14 +277,22 @@ class CanslimScorer:
         self,
         thresholds: CanslimThresholds | None = None,
         weights: ScoreWeights | None = None,
+        theme_thresholds: ThemeThresholds | None = None,
+        theme_weights: ThemeWeights | None = None,
+        profile: str = "canslim",
     ):
         self.thresholds = thresholds or CanslimThresholds()
         self.weights = weights or ScoreWeights()
+        self.theme_thresholds = theme_thresholds or ThemeThresholds()
+        self.theme_weights = theme_weights or ThemeWeights()
+        self.profile = profile
+        self.include_theme = profile in ("theme", "full")
 
     def score_universe(
         self,
         responses: dict[str, TdxResponse],
         market_snap: MarketSnapshot | None = None,
+        theme_snap: ThemeCycleSnapshot | None = None,
     ) -> list[StockScore]:
         pools = _merge_pools(responses)
         all_codes: set[str] = set()
@@ -295,34 +305,57 @@ class CanslimScorer:
                     code_meta[code] = (rec.name, rec.industry)
 
         w = self.weights
+        tw = self.theme_weights
         results: list[StockScore] = []
 
         for code in all_codes:
             name, industry = code_meta[code]
-            dims = {
-                "C": _score_c(code, pools, self.thresholds, w.c),
-                "A": _score_a(code, pools, self.thresholds, w.a),
-                "N": _score_n(code, pools, w.n),
-                "S": _score_s(code, pools, self.thresholds, w.s),
-                "L": _score_l(code, pools, w.l),
-                "I": _score_i(code, pools, w.i),
-                "VP": _score_vp(code, pools, w.volume_breakout),
-            }
+            dims: dict[str, DimensionScore] = {}
+
+            if self.profile in ("canslim", "full"):
+                dims.update({
+                    "C": _score_c(code, pools, self.thresholds, w.c),
+                    "A": _score_a(code, pools, self.thresholds, w.a),
+                    "N": _score_n(code, pools, w.n),
+                    "S": _score_s(code, pools, self.thresholds, w.s),
+                    "L": _score_l(code, pools, w.l),
+                    "I": _score_i(code, pools, w.i),
+                    "VP": _score_vp(code, pools, w.volume_breakout),
+                })
+
+            if self.include_theme:
+                dims.update({
+                    "TC": _score_tc(code, pools, tw.tc, self.theme_thresholds.require_explosion_phase),
+                    "LG": _score_lg(code, pools, self.theme_thresholds, tw.lg),
+                    "EC": _score_ec(code, pools, tw.ec),
+                })
 
             total = sum(d.score for d in dims.values())
 
-            if market_snap:
+            if market_snap and self.profile in ("canslim", "full"):
                 m_score, m_reasons = market_score(market_snap, w.m)
                 dims["M"] = DimensionScore("M", market_snap.direction != "bear", m_score, w.m, m_reasons)
                 total += m_score
 
             tags = []
-            if dims["L"].hit:
+            if dims.get("L") and dims["L"].hit:
                 tags.append("龙头")
-            if dims["VP"].hit:
+            if dims.get("VP") and dims["VP"].hit:
                 tags.append("量价突破")
-            if dims["C"].hit and dims["S"].hit:
+            if dims.get("C") and dims.get("S") and dims["C"].hit and dims["S"].hit:
                 tags.append("业绩+筹码")
+            if dims.get("TC") and dims["TC"].hit:
+                tags.append("爆发期")
+            if dims.get("LG") and dims["LG"].hit:
+                tags.append("涨停基因")
+            if dims.get("EC") and dims["EC"].hit:
+                tags.append("事件催化")
+
+            coarse_ok, coarse_notes = False, []
+            if self.include_theme and tw.require_coarse_filter:
+                coarse_ok, coarse_notes = coarse_filter_stock(code, pools, self.theme_thresholds)
+                if coarse_ok:
+                    tags.append("粗筛通过")
 
             results.append(
                 StockScore(
@@ -332,6 +365,8 @@ class CanslimScorer:
                     total_score=round(total, 1),
                     dimension_scores=dims,
                     tags=tags,
+                    coarse_passed=coarse_ok,
+                    coarse_notes=coarse_notes,
                 )
             )
 
@@ -339,6 +374,23 @@ class CanslimScorer:
         return results
 
     def filter_passed(self, scores: list[StockScore]) -> list[StockScore]:
+        if self.profile == "theme":
+            tw = self.theme_weights
+            return [
+                s for s in scores
+                if s.total_score >= 20
+                and s.hit_count >= 2
+                and (not tw.require_coarse_filter or s.coarse_passed)
+            ]
+        if self.profile == "full":
+            tw = self.theme_weights
+            w = self.weights
+            return [
+                s for s in scores
+                if s.total_score >= w.min_pass_score + tw.tc * 0.3
+                and s.hit_count >= w.min_dimension_hits
+                and (not tw.require_coarse_filter or s.coarse_passed)
+            ]
         return [
             s
             for s in scores

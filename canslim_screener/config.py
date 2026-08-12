@@ -49,11 +49,39 @@ class ScoreWeights:
     min_dimension_hits: int = 5
 
 
+@dataclass(frozen=True)
+class ThemeThresholds:
+    """题材周期 + 涨停基因 + 事件催化 阈值。"""
+
+    turnover_min: float = 5.0
+    turnover_max: float = 15.0
+    float_mcap_min_yi: float = 20.0
+    float_mcap_max_yi: float = 200.0
+    lg_min_hits: int = 2          # 涨停基因三项中至少命中几项
+    require_explosion_phase: bool = True  # 粗筛：仅爆发期
+
+
+@dataclass(frozen=True)
+class ThemeWeights:
+    """题材战法维度权重（与 CANSLIM 叠加使用）。"""
+
+    tc: float = 12.0   # 题材周期
+    lg: float = 10.0   # 涨停基因
+    ec: float = 10.0   # 事件催化
+
+    min_pass_score: float = 65.0
+    min_dimension_hits: int = 6
+    require_coarse_filter: bool = True
+
+
 @dataclass
 class ScreenerConfig:
     thresholds: CanslimThresholds = field(default_factory=CanslimThresholds)
     weights: ScoreWeights = field(default_factory=ScoreWeights)
+    theme_thresholds: ThemeThresholds = field(default_factory=ThemeThresholds)
+    theme_weights: ThemeWeights = field(default_factory=ThemeWeights)
     page_size: int = 100
     max_pages_per_query: int = 5
     cache_dir: str = "data/cache"
     report_dir: str = "reports"
+    profile: str = "canslim"  # canslim | theme | full

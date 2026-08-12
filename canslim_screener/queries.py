@@ -15,6 +15,9 @@ class Dimension(str, Enum):
     I = "I"
     M = "M"
     VP = "VP"  # Volume-Price breakout
+    TC = "TC"  # Theme cycle 题材周期
+    LG = "LG"  # Limit-up gene 涨停基因
+    EC = "EC"  # Event catalyst 事件催化
 
 
 @dataclass(frozen=True)
@@ -148,4 +151,52 @@ MARKET_QUERIES: list[TdxQuery] = [
     ),
 ]
 
-ALL_QUERIES = CANSLIM_QUERIES + MARKET_QUERIES
+THEME_QUERIES: list[TdxQuery] = [
+    # TC — 题材周期
+    TdxQuery(
+        key="tc_continuous_board",
+        dimension=Dimension.TC,
+        question="连续涨停天数大于等于2",
+        description="连板股 — 爆发期核心信号",
+    ),
+    TdxQuery(
+        key="tc_strong_20d",
+        dimension=Dimension.TC,
+        question="20日内强势股",
+        description="20日涨幅领先 — 题材爆发确认",
+    ),
+    # LG — 涨停基因
+    TdxQuery(
+        key="lg_limit_gene",
+        dimension=Dimension.LG,
+        question="100天内经常涨停",
+        description="历史连板记录 — 股性活跃",
+    ),
+    TdxQuery(
+        key="lg_turnover",
+        dimension=Dimension.LG,
+        question="换手率5%到15%",
+        description="日换手 5%-15% — 充分换手",
+    ),
+    # EC — 事件催化
+    TdxQuery(
+        key="ec_earnings_preview",
+        dimension=Dimension.EC,
+        question="业绩预告预增",
+        description="业绩预增/扭亏",
+    ),
+    TdxQuery(
+        key="ec_bid_win",
+        dimension=Dimension.EC,
+        question="中标大单",
+        description="中标/大订单催化",
+    ),
+    TdxQuery(
+        key="ec_merger",
+        dimension=Dimension.EC,
+        question="并购重组",
+        description="并购重组/资产注入",
+    ),
+]
+
+ALL_QUERIES = CANSLIM_QUERIES + THEME_QUERIES + MARKET_QUERIES

@@ -22,14 +22,48 @@ A股量化选股工具集。
 ### 快速开始
 
 ```bash
-# 1. 检查 TDX 缓存状态
+# CANSLIM 模式（默认）
+python3 -m canslim_screener.cli scan --report
+
+# 题材周期模式（爆发期 + 涨停基因 + 事件催化）
+python3 -m canslim_screener.cli scan --profile theme --report
+
+# 全维度模式（CANSLIM + 题材战法）
+python3 -m canslim_screener.cli scan --profile full --report
+
+# 单股粗筛复核
+python3 -m canslim_screener.cli coarse-filter --code 603758
+
+# 检查缓存 / 查看查询模板
 python3 -m canslim_screener.cli cache-status
-
-# 2. 运行扫描（从 data/cache/ 读取）
-python3 -m canslim_screener.cli scan --top 20 --report
-
-# 3. 查看所有 TDX 查询模板
 python3 -m canslim_screener.cli list-queries
+```
+
+### 题材周期战法（新增）
+
+| 阶段 | 特征 | 操作 |
+|------|------|------|
+| 萌芽期 | 涨停基因出现，首板/放量启动 | 观察，等爆发确认 |
+| **爆发期** | 连板≥2，20日强势+涨停 | **唯一参与窗口** |
+| 分化期 | 涨停打开频繁，跟风股回落 | 只做最强龙头 |
+| 退潮期 | 连板断裂，高位放量滞涨 | 不参与 |
+
+**涨停基因三项（至少命中 2/3）：**
+- 100天内经常涨停（历史连板记录）
+- 日换手 5%-15%（股性活跃）
+- 流通市值 20-200 亿（适中）
+
+**事件催化（至少 1 项）：** 业绩预增、中标大单、政策扶持、并购重组、行业涨价
+
+### 可落地粗筛 Checklist
+
+```
+□ 题材周期 = 爆发期
+□ 涨停基因 ≥ 2/3
+□ 事件催化 ≥ 1 项
+□ CANSLIM 业绩+筹码+龙头（full 模式）
+□ 大盘非 bear + 市场题材非退潮
+□ 人工复核：新故事逻辑、板块地位
 ```
 
 ### MCP 数据拉取流程

@@ -43,6 +43,8 @@ class StockScore:
     total_score: float
     dimension_scores: dict[str, DimensionScore]
     tags: list[str] = field(default_factory=list)
+    coarse_passed: bool = False
+    coarse_notes: list[str] = field(default_factory=list)
 
     @property
     def hit_count(self) -> int:
