@@ -1,0 +1,42 @@
+{
+  "NVDA.US": {
+    "quote": {
+      "last_done": "225.300",
+      "post_market": {"last_done": "225.426"},
+      "overnight": {"last_done": "225.120"}
+    },
+    "option_volume": {"c": "1598078", "p": "829320"}
+  },
+  "TSLA.US": {
+    "quote": {
+      "last_done": "339.960",
+      "post_market": {"last_done": "341.510"},
+      "overnight": {"last_done": "340.250"}
+    },
+    "option_volume": {"c": "1330305", "p": "704917"}
+  },
+  "AMD.US": {
+    "quote": {
+      "last_done": "483.010",
+      "post_market": {"last_done": "486.850"},
+      "overnight": {"last_done": "484.560"}
+    },
+    "option_volume": {"c": "174212", "p": "147550"}
+  },
+  "MRVL.US": {
+    "quote": {
+      "last_done": "222.180",
+      "post_market": {"last_done": "224.500"},
+      "overnight": {"last_done": "223.520"}
+    },
+    "option_volume": {"c": "149024", "p": "61325"}
+  },
+  "SOXX.US": {
+    "quote": {
+      "last_done": "550.740",
+      "post_market": {"last_done": "552.300"},
+      "overnight": {"last_done": "549.980"}
+    },
+    "option_volume": {"c": "27161", "p": "32447"}
+  }
+}

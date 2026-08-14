@@ -1,0 +1,24 @@
+# 期权机动仓纪律（与 70/30 体系对接）
+version: "1.0"
+
+session_beijing:
+  pre_market: "21:30-22:30"    # 美东 09:30 前：PCR/IV 异动扫描
+  open_hour: "22:30-23:30"     # 开盘首小时：只观察或极小仓
+  mid_session: "23:30-03:00"
+  close_hour: "03:00-04:00"      # 收盘前：Gamma 管理 / 不留裸 short
+
+strategies:
+  premium_anomaly:
+    enabled: true
+    prefer: [credit_spread, iron_condor, calendar]
+    avoid: [naked_short_put, naked_short_call]
+  event_vol:
+    enabled: true
+    days_before_earnings_reduce: 3
+  order_flow_stock:
+    enabled: false              # 正股日内与期权分开；期权为主
+
+risk:
+  max_loss_per_trade_pct: 2     # 占机动仓
+  max_daily_loss_pct: 5
+  stop_loss: always             # 价差 50% 权利金 / 单腿 -30%

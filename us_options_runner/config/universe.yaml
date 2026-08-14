@@ -1,0 +1,47 @@
+# 美股期权观察池（机动仓 30% · 溢价异动 + 事件 vol）
+version: "1.0"
+
+# 默认扫描到期：weekly 优先（流动性 + 适合日内/短 swing）
+default_expiry_offset_days: 7
+
+symbols:
+  core:
+    - symbol: NVDA.US
+      role: 算力锚
+      notes: IV 基准；spread 主战场
+    - symbol: TSLA.US
+      role: 高波动 / tsll 类对手逆向
+      notes: 动量 + call 活跃；严格 Vega 上限
+    - symbol: AMD.US
+      role: 算力二梯队
+  event:
+    - symbol: MRVL.US
+      role: 定制芯片 / 网络
+      earnings: "2026-08-27"
+      notes: 8/27 财报前 IV 抬升窗口；短 DTE 慎 naked
+  etf:
+    - symbol: SOXX.US
+      role: 半导体 beta / 对冲参考
+  rotation:
+    - symbol: COHR.US
+      role: 光模块/激光 · 电子元件接力
+      notes: LITE 产业链；7–14 DTE put credit spread；不追垂直拉升
+    - symbol: GLW.US
+      role: 光通信材料 · 电子元件
+      notes: 波动低于 LITE；iron condor / 宽 spread 优先
+    - symbol: AAOI.US
+      role: 光模块小票补涨
+      notes: 高 beta 小票；单名 ≤ 机动仓 10%；严格 Vega
+
+# 人机干预开关（manual override）
+human_override:
+  emotion_recession: true   # 情绪退潮 → 暂停卖 vol / 减 Vega
+  max_single_name_pct: 15   # 单标的期权名义上限占机动仓 %
+  max_total_vega: medium    # low | medium | high
+
+# PCR 解读阈值（成交量）
+pcr_volume:
+  bullish_crowded: 0.45     # call 过多，警惕一致做多
+  neutral_low: 0.45
+  neutral_high: 0.65
+  hedge_elevated: 0.75      # put 放量，可能对冲或看空
