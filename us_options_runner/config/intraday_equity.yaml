@@ -1,0 +1,71 @@
+# 机动仓 · 大票日内正股（与 70% 底仓分开）
+version: "1.0"
+
+role: "30% 机动仓 · 日内正股短线（非底仓、非 0DTE）"
+
+# 固定参数（你的习惯）
+trade:
+  min_price_usd: 300
+  default_shares: 40
+  max_names_per_day: 2
+  max_trades_per_day: 2
+
+# 只在这些里选（流动性 + 你熟悉）；筛出小票也优先回落到这里
+watchlist:
+  tier1:
+    - META.US
+    - AMZN.US
+    - GOOGL.US
+    - NVDA.US
+    - TSLA.US
+  tier2:
+    - MSFT.US
+    - AAPL.US
+    - AMD.US
+
+# 盘前三条筛选（必须全过才进观察池）
+pre_market_filters:
+  - id: price_liquid
+    name: "大票 + 流动性"
+    rules:
+      - "股价 ≥ 300 USD"
+      - "日均成交额 mega cap 级别（优先 tier1）"
+      - "买卖价差窄（App 里买一卖一差 < 0.05% 更好）"
+  - id: catalyst
+    name: "当天有 catalyst"
+    rules:
+      - "盘前有新闻/财报/评级/行业利好（App 资讯或 news MCP）"
+      - "预盘涨跌幅 -2% ~ +3%（别追已涨 4%+）"
+      - "和 SPY/板块方向不严重背离"
+  - id: main_force
+    name: "主力净流入"
+    rules:
+      - "Longbridge：个股 → 资金 → 主力净流入为正"
+      - "或 screener + capital_flow 近 30 分钟 net 改善"
+      - "预盘已大涨 + 流入 = 等回踩再买，不追第一根"
+
+# 时段（美东 · 夏令时；北京 = 美东 + 12 小时）
+session_et:
+  observe_only: "09:30-09:45"       # 只看，不买
+  entry_window: "09:45-10:30"       # 主进场窗
+  manage: "10:30-15:30"
+  force_flat: "15:30-16:00"         # 尽量不留过夜（日内纪律）
+
+session_beijing:
+  observe_only: "21:30-21:45"
+  entry_window: "21:45-22:30"
+  manage: "22:30-03:30"
+  force_flat: "03:30-04:00"
+
+# 进出场（按 40 股 × 股价自动心算）
+risk:
+  target_pct: [0.008, 0.012]        # +0.8% ~ +1.2% ≈ $100~150 @ ~$300×40
+  stop_pct: [0.005, 0.007]          # -0.5% ~ -0.7%
+  max_daily_loss_usd: 200
+  consecutive_loss_skip_days: 1     # 连亏 2 单 → 停 1 天
+
+# 与底仓隔离
+base_position_firewall:
+  - "底仓 META/TSLA/AMZN 按计划价分批；不因日内利好加底仓"
+  - "日内仓当天平；盈利不自动转底仓"
+  - "同一标的可既有底仓又有日内，但股数/心态分开记账"

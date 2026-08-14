@@ -26,9 +26,19 @@ Agent 会话中可说：**「跑一遍期权扫描」**，会拉 Longbridge 数�
 
 ## 策略优先级
 
-1. **溢价异动**：iron condor / credit spread（不卖 naked）
-2. **事件 vol**：MRVL 8/27 财报前 calendar
-3. **TSLA/NVDA**：PCR + 盘后动量，人机确认后小仓
-4. **光模块接力**（Longbridge 板块轮动）：COHR / GLW / AAOI — LITE 涨后的补涨链，只做 spread
+1. **大票日内正股**（机动仓主玩法）：≥$300 · ~40 股 · 利好 + 主力流入 → 见 `docs/intraday_equity_playbook.md`
+2. **溢价异动**：iron condor / credit spread（不卖 naked）
+3. **事件 vol**：MRVL 8/27 财报前 calendar
+4. **TSLA/NVDA**：PCR + 盘后动量，人机确认后小仓
+5. **光模块接力**（Longbridge 板块轮动）：COHR / GLW / AAOI — LITE 涨后的补涨链，只做 spread
 
 观察池见 `config/universe.yaml` 的 `rotation` 分组。
+
+### 大票日内（盘前 3 筛 + 执行表）
+
+```bash
+python3 us_options_runner/intraday_equity_scan.py
+python3 us_options_runner/intraday_equity_scan.py --levels 485.50 780.00
+```
+
+配置：`config/intraday_equity.yaml` · 每日填表：`docs/intraday_equity_playbook.md`
