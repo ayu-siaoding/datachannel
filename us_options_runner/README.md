@@ -29,3 +29,6 @@ Agent 会话中可说：**「跑一遍期权扫描」**，会拉 Longbridge 数�
 1. **溢价异动**：iron condor / credit spread（不卖 naked）
 2. **事件 vol**：MRVL 8/27 财报前 calendar
 3. **TSLA/NVDA**：PCR + 盘后动量，人机确认后小仓
+4. **光模块接力**（Longbridge 板块轮动）：COHR / GLW / AAOI — LITE 涨后的补涨链，只做 spread
+
+观察池见 `config/universe.yaml` 的 `rotation` 分组。

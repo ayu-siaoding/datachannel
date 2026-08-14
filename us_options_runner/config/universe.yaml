@@ -22,6 +22,16 @@ symbols:
   etf:
     - symbol: SOXX.US
       role: 半导体 beta / 对冲参考
+  rotation:
+    - symbol: COHR.US
+      role: 光模块/激光 · 电子元件接力
+      notes: LITE 产业链；7–14 DTE put credit spread；不追垂直拉升
+    - symbol: GLW.US
+      role: 光通信材料 · 电子元件
+      notes: 波动低于 LITE；iron condor / 宽 spread 优先
+    - symbol: AAOI.US
+      role: 光模块小票补涨
+      notes: 高 beta 小票；单名 ≤ 机动仓 10%；严格 Vega
 
 # 人机干预开关（manual override）
 human_override:

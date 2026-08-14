@@ -76,6 +76,10 @@ def _suggest(meta: dict[str, Any], pcr: float | None, signal: str, spot: float |
         notes.append("Put 放量但正股偏强：多为对冲；慎追空，可看 7–14 DTE put credit spread")
     if sym == "SOXX.US" and signal == "put_heavy":
         notes.append("半导体 ETF put 偏厚：板块对冲情绪；单名 spread 可略放宽 put 侧")
+    if sym in ("COHR.US", "GLW.US", "AAOI.US"):
+        notes.append("光模块接力链：LITE 涨后看补涨；只做 spread，单日大涨不追 call")
+        if signal == "call_crowded":
+            notes.append("Call 拥挤：优先 bear call spread 或等回调")
     if pcr is not None and signal == "put_heavy" and sym not in ("AMD.US", "SOXX.US"):
         notes.append("Put 放量：检查是否对冲；慎追空，可看 put spread 是否过贵")
     if not notes:
@@ -157,6 +161,21 @@ def main() -> None:
                 "quote": {"last_done": "550.74", "post_market": {"last_done": "552.30"}, "overnight": {"last_done": "549.98"}},
                 "option_volume": {"c": "27161", "p": "32447"},
                 "meta": _meta(cfg, "SOXX.US"),
+            },
+            "COHR.US": {
+                "quote": {"last_done": "332.73", "post_market": {"last_done": "329.44"}, "overnight": {"last_done": "327.00"}},
+                "option_volume": {"c": "120000", "p": "85000"},
+                "meta": _meta(cfg, "COHR.US"),
+            },
+            "GLW.US": {
+                "quote": {"last_done": "165.17", "post_market": {"last_done": "158.54"}, "overnight": {"last_done": "159.00"}},
+                "option_volume": {"c": "45000", "p": "38000"},
+                "meta": _meta(cfg, "GLW.US"),
+            },
+            "AAOI.US": {
+                "quote": {"last_done": "149.74", "post_market": {"last_done": "132.46"}, "overnight": {"last_done": "131.39"}},
+                "option_volume": {"c": "980000", "p": "420000"},
+                "meta": _meta(cfg, "AAOI.US"),
             },
         }
         report = build_report(demo)
