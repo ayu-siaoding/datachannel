@@ -1,0 +1,2612 @@
+[
+  {
+    "timestamp": "2021-08-16T00:00:00+08:00",
+    "open": "4.532421",
+    "high": "4.561370",
+    "low": "4.331583",
+    "close": "4.372293",
+    "volume": 1395824268,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-08-23T00:00:00+08:00",
+    "open": "4.381341",
+    "high": "4.503472",
+    "low": "4.378627",
+    "close": "4.432003",
+    "volume": 1305399753,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-08-30T00:00:00+08:00",
+    "open": "4.442858",
+    "high": "4.512519",
+    "low": "4.351486",
+    "close": "4.449192",
+    "volume": 1419455185,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-09-06T00:00:00+08:00",
+    "open": "4.449191",
+    "high": "4.638268",
+    "low": "4.445573",
+    "close": "4.605700",
+    "volume": 1760854710,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-09-13T00:00:00+08:00",
+    "open": "4.600272",
+    "high": "4.621984",
+    "low": "4.403957",
+    "close": "4.458238",
+    "volume": 1861804720,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-09-20T00:00:00+08:00",
+    "open": "4.458238",
+    "high": "4.500757",
+    "low": "4.389482",
+    "close": "4.460952",
+    "volume": 1243374045,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-09-27T00:00:00+08:00",
+    "open": "4.473617",
+    "high": "4.521565",
+    "low": "4.413003",
+    "close": "4.464570",
+    "volume": 1528749579,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-10-04T00:00:00+08:00",
+    "open": "4.464570",
+    "high": "4.536944",
+    "low": "4.464570",
+    "close": "4.528802",
+    "volume": 244624120,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-10-11T00:00:00+08:00",
+    "open": "4.536039",
+    "high": "4.577654",
+    "low": "4.444667",
+    "close": "4.528802",
+    "volume": 1262281614,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-10-18T00:00:00+08:00",
+    "open": "4.526088",
+    "high": "4.588511",
+    "low": "4.447381",
+    "close": "4.555942",
+    "volume": 1255109426,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-10-25T00:00:00+08:00",
+    "open": "4.543277",
+    "high": "4.602986",
+    "low": "4.456429",
+    "close": "4.506186",
+    "volume": 1659214235,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-11-01T00:00:00+08:00",
+    "open": "4.484473",
+    "high": "4.518851",
+    "low": "4.409385",
+    "close": "4.453714",
+    "volume": 1515075055,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-11-08T00:00:00+08:00",
+    "open": "4.451000",
+    "high": "4.515232",
+    "low": "4.365961",
+    "close": "4.496234",
+    "volume": 1690023282,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-11-15T00:00:00+08:00",
+    "open": "4.499853",
+    "high": "4.519756",
+    "low": "4.434716",
+    "close": "4.496234",
+    "volume": 1551289234,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-11-22T00:00:00+08:00",
+    "open": "4.499853",
+    "high": "4.537849",
+    "low": "4.457333",
+    "close": "4.465475",
+    "volume": 1191407211,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-11-29T00:00:00+08:00",
+    "open": "4.432907",
+    "high": "4.505281",
+    "low": "4.422051",
+    "close": "4.504376",
+    "volume": 1009829448,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-12-06T00:00:00+08:00",
+    "open": "4.507090",
+    "high": "4.707928",
+    "low": "4.495329",
+    "close": "4.652743",
+    "volume": 1915864806,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-12-13T00:00:00+08:00",
+    "open": "4.674455",
+    "high": "4.728736",
+    "low": "4.551419",
+    "close": "4.553228",
+    "volume": 1995227979,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-12-20T00:00:00+08:00",
+    "open": "4.526088",
+    "high": "4.552324",
+    "low": "4.475426",
+    "close": "4.520660",
+    "volume": 2597706364,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2021-12-27T00:00:00+08:00",
+    "open": "4.520660",
+    "high": "4.556847",
+    "low": "4.482664",
+    "close": "4.530612",
+    "volume": 2374185670,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-01-03T00:00:00+08:00",
+    "open": "4.530612",
+    "high": "4.547801",
+    "low": "4.394006",
+    "close": "4.432003",
+    "volume": 1946220882,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-01-10T00:00:00+08:00",
+    "open": "4.422051",
+    "high": "4.462761",
+    "low": "4.334297",
+    "close": "4.337011",
+    "volume": 2312975084,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-01-17T00:00:00+08:00",
+    "open": "4.408368",
+    "high": "4.499328",
+    "low": "4.369779",
+    "close": "4.395505",
+    "volume": 2967670847,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-01-24T00:00:00+08:00",
+    "open": "4.373454",
+    "high": "4.409286",
+    "low": "4.180507",
+    "close": "4.184182",
+    "volume": 3043700354,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-01-31T00:00:00+08:00",
+    "open": "4.184182",
+    "high": "4.184182",
+    "low": "4.184182",
+    "close": "4.184182",
+    "volume": 0,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-02-07T00:00:00+08:00",
+    "open": "4.249417",
+    "high": "4.284331",
+    "low": "4.148350",
+    "close": "4.222772",
+    "volume": 2348792864,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-02-14T00:00:00+08:00",
+    "open": "4.208071",
+    "high": "4.267793",
+    "low": "4.158456",
+    "close": "4.266874",
+    "volume": 2317228803,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-02-21T00:00:00+08:00",
+    "open": "4.259524",
+    "high": "4.260442",
+    "low": "4.124461",
+    "close": "4.194289",
+    "volume": 2062118365,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-02-28T00:00:00+08:00",
+    "open": "4.191533",
+    "high": "4.242067",
+    "low": "4.116192",
+    "close": "4.129055",
+    "volume": 1396147817,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-03-07T00:00:00+08:00",
+    "open": "4.096897",
+    "high": "4.096897",
+    "low": "3.739487",
+    "close": "3.961834",
+    "volume": 3011758612,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-03-14T00:00:00+08:00",
+    "open": "3.904869",
+    "high": "3.945296",
+    "low": "3.621881",
+    "close": "3.912220",
+    "volume": 4353300129,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-03-21T00:00:00+08:00",
+    "open": "3.916814",
+    "high": "3.937946",
+    "low": "3.828610",
+    "close": "3.830447",
+    "volume": 1508133607,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-03-28T00:00:00+08:00",
+    "open": "3.798289",
+    "high": "3.940702",
+    "low": "3.751431",
+    "close": "3.922326",
+    "volume": 1946410730,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-04-04T00:00:00+08:00",
+    "open": "3.922326",
+    "high": "3.922326",
+    "low": "3.835960",
+    "close": "3.889249",
+    "volume": 938563418,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-04-11T00:00:00+08:00",
+    "open": "3.863524",
+    "high": "3.869955",
+    "low": "3.745000",
+    "close": "3.841473",
+    "volume": 2879721814,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-04-18T00:00:00+08:00",
+    "open": "3.808396",
+    "high": "3.846067",
+    "low": "3.631069",
+    "close": "3.680684",
+    "volume": 2393935803,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-04-25T00:00:00+08:00",
+    "open": "3.624637",
+    "high": "3.692628",
+    "low": "3.454661",
+    "close": "3.688953",
+    "volume": 6406675256,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-05-02T00:00:00+08:00",
+    "open": "3.688953",
+    "high": "3.703654",
+    "low": "3.583292",
+    "close": "3.586048",
+    "volume": 1256765111,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-05-09T00:00:00+08:00",
+    "open": "3.563079",
+    "high": "3.699060",
+    "low": "3.498763",
+    "close": "3.658633",
+    "volume": 2082258386,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-05-16T00:00:00+08:00",
+    "open": "3.675171",
+    "high": "3.748674",
+    "low": "3.616369",
+    "close": "3.747756",
+    "volume": 1932874690,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-05-23T00:00:00+08:00",
+    "open": "3.747756",
+    "high": "3.747756",
+    "low": "3.612693",
+    "close": "3.677009",
+    "volume": 2420351149,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-05-30T00:00:00+08:00",
+    "open": "3.693547",
+    "high": "3.769807",
+    "low": "3.681603",
+    "close": "3.761538",
+    "volume": 1570357154,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-06-06T00:00:00+08:00",
+    "open": "3.759700",
+    "high": "3.914058",
+    "low": "3.734893",
+    "close": "3.903032",
+    "volume": 2171675114,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-06-13T00:00:00+08:00",
+    "open": "3.868118",
+    "high": "4.009612",
+    "low": "3.780832",
+    "close": "3.970104",
+    "volume": 3549847443,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-06-20T00:00:00+08:00",
+    "open": "3.979291",
+    "high": "4.066577",
+    "low": "3.934270",
+    "close": "4.054632",
+    "volume": 2337328048,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-06-27T00:00:00+08:00",
+    "open": "4.069333",
+    "high": "4.175913",
+    "low": "4.069333",
+    "close": "4.128136",
+    "volume": 2389321837,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-07-04T00:00:00+08:00",
+    "open": "4.114354",
+    "high": "4.194289",
+    "low": "4.062902",
+    "close": "4.101491",
+    "volume": 1709795238,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-07-11T00:00:00+08:00",
+    "open": "4.084953",
+    "high": "4.084953",
+    "low": "3.944377",
+    "close": "3.946215",
+    "volume": 2155068376,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-07-18T00:00:00+08:00",
+    "open": "3.961834",
+    "high": "4.005937",
+    "low": "3.913138",
+    "close": "3.940702",
+    "volume": 1667741926,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-07-25T00:00:00+08:00",
+    "open": "3.937027",
+    "high": "3.978372",
+    "low": "3.869036",
+    "close": "3.877305",
+    "volume": 1725955615,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-08-01T00:00:00+08:00",
+    "open": "3.864442",
+    "high": "3.903032",
+    "low": "3.777157",
+    "close": "3.875468",
+    "volume": 1874163682,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-08-08T00:00:00+08:00",
+    "open": "3.859849",
+    "high": "3.919570",
+    "low": "3.811152",
+    "close": "3.909463",
+    "volume": 1156509891,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-08-15T00:00:00+08:00",
+    "open": "3.897519",
+    "high": "3.938865",
+    "low": "3.865361",
+    "close": "3.867199",
+    "volume": 1171738097,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-08-22T00:00:00+08:00",
+    "open": "3.858929",
+    "high": "3.904869",
+    "low": "3.789101",
+    "close": "3.835960",
+    "volume": 1549337188,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-08-29T00:00:00+08:00",
+    "open": "3.804721",
+    "high": "3.842392",
+    "low": "3.733974",
+    "close": "3.752350",
+    "volume": 1605957973,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-09-05T00:00:00+08:00",
+    "open": "3.744080",
+    "high": "3.828609",
+    "low": "3.711923",
+    "close": "3.821259",
+    "volume": 1228147443,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-09-12T00:00:00+08:00",
+    "open": "3.821259",
+    "high": "3.854336",
+    "low": "3.671496",
+    "close": "3.675171",
+    "volume": 2071970399,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-09-19T00:00:00+08:00",
+    "open": "3.669659",
+    "high": "3.696303",
+    "low": "3.575942",
+    "close": "3.605343",
+    "volume": 1862889911,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-09-26T00:00:00+08:00",
+    "open": "3.583292",
+    "high": "3.636582",
+    "low": "3.551134",
+    "close": "3.553890",
+    "volume": 2949737958,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-10-03T00:00:00+08:00",
+    "open": "3.553890",
+    "high": "3.553890",
+    "low": "3.553890",
+    "close": "3.553890",
+    "volume": 0,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-10-10T00:00:00+08:00",
+    "open": "3.552972",
+    "high": "3.604424",
+    "low": "3.416990",
+    "close": "3.586048",
+    "volume": 3001772331,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-10-17T00:00:00+08:00",
+    "open": "3.578698",
+    "high": "3.610856",
+    "low": "3.476712",
+    "close": "3.493250",
+    "volume": 1807933876,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-10-24T00:00:00+08:00",
+    "open": "3.490494",
+    "high": "3.521733",
+    "low": "3.303060",
+    "close": "3.311329",
+    "volume": 3390132163,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-10-31T00:00:00+08:00",
+    "open": "3.289278",
+    "high": "3.538271",
+    "low": "3.263552",
+    "close": "3.522652",
+    "volume": 4035816330,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-11-07T00:00:00+08:00",
+    "open": "3.500600",
+    "high": "3.581454",
+    "low": "3.424340",
+    "close": "3.535514",
+    "volume": 3739453886,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-11-14T00:00:00+08:00",
+    "open": "3.581454",
+    "high": "3.618206",
+    "low": "3.523570",
+    "close": "3.552053",
+    "volume": 3596765286,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-11-21T00:00:00+08:00",
+    "open": "3.525408",
+    "high": "3.556647",
+    "low": "3.482224",
+    "close": "3.525408",
+    "volume": 2747430840,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-11-28T00:00:00+08:00",
+    "open": "3.465687",
+    "high": "3.684359",
+    "low": "3.427097",
+    "close": "3.613612",
+    "volume": 3472117706,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-12-05T00:00:00+08:00",
+    "open": "3.651282",
+    "high": "3.738567",
+    "low": "3.635663",
+    "close": "3.728461",
+    "volume": 3480924065,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-12-12T00:00:00+08:00",
+    "open": "3.716517",
+    "high": "3.716517",
+    "low": "3.664146",
+    "close": "3.690791",
+    "volume": 2891559200,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-12-19T00:00:00+08:00",
+    "open": "3.695384",
+    "high": "3.705491",
+    "low": "3.557566",
+    "close": "3.575023",
+    "volume": 3856429791,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2022-12-26T00:00:00+08:00",
+    "open": "3.574104",
+    "high": "3.631988",
+    "low": "3.572266",
+    "close": "3.616185",
+    "volume": 3234011043,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-01-02T00:00:00+08:00",
+    "open": "3.618206",
+    "high": "3.732136",
+    "low": "3.574104",
+    "close": "3.716517",
+    "volume": 2952693621,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-01-09T00:00:00+08:00",
+    "open": "3.734893",
+    "high": "3.811152",
+    "low": "3.722948",
+    "close": "3.807477",
+    "volume": 3078229809,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-01-16T00:00:00+08:00",
+    "open": "3.812144",
+    "high": "3.913863",
+    "low": "3.810278",
+    "close": "3.901732",
+    "volume": 3941093712,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-01-23T00:00:00+08:00",
+    "open": "3.901732",
+    "high": "3.901732",
+    "low": "3.901732",
+    "close": "3.901732",
+    "volume": 0,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-01-30T00:00:00+08:00",
+    "open": "3.975454",
+    "high": "3.981987",
+    "low": "3.827074",
+    "close": "3.860670",
+    "volume": 4618126210,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-02-06T00:00:00+08:00",
+    "open": "3.828941",
+    "high": "3.855071",
+    "low": "3.786947",
+    "close": "3.828941",
+    "volume": 2864730126,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-02-13T00:00:00+08:00",
+    "open": "3.816809",
+    "high": "3.889600",
+    "low": "3.756151",
+    "close": "3.759884",
+    "volume": 3342054234,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-02-20T00:00:00+08:00",
+    "open": "3.764550",
+    "high": "3.872802",
+    "low": "3.758950",
+    "close": "3.788813",
+    "volume": 3337709106,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-02-27T00:00:00+08:00",
+    "open": "3.770149",
+    "high": "3.859737",
+    "low": "3.751485",
+    "close": "3.848539",
+    "volume": 2981292473,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-03-06T00:00:00+08:00",
+    "open": "3.849472",
+    "high": "3.851338",
+    "low": "3.694560",
+    "close": "3.696426",
+    "volume": 2941316648,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-03-13T00:00:00+08:00",
+    "open": "3.696426",
+    "high": "3.747752",
+    "low": "3.667496",
+    "close": "3.689893",
+    "volume": 2880940563,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-03-20T00:00:00+08:00",
+    "open": "3.689893",
+    "high": "3.764550",
+    "low": "3.663764",
+    "close": "3.757084",
+    "volume": 2498822758,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-03-27T00:00:00+08:00",
+    "open": "3.756151",
+    "high": "3.791613",
+    "low": "3.715090",
+    "close": "3.779482",
+    "volume": 2843166563,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-04-03T00:00:00+08:00",
+    "open": "3.779482",
+    "high": "3.853205",
+    "low": "3.774816",
+    "close": "3.842006",
+    "volume": 1739520946,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-04-10T00:00:00+08:00",
+    "open": "3.852271",
+    "high": "3.853205",
+    "low": "3.786014",
+    "close": "3.811210",
+    "volume": 2204373635,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-04-17T00:00:00+08:00",
+    "open": "3.808410",
+    "high": "3.884933",
+    "low": "3.755218",
+    "close": "3.760817",
+    "volume": 2748132581,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-04-24T00:00:00+08:00",
+    "open": "3.759884",
+    "high": "3.762684",
+    "low": "3.661897",
+    "close": "3.756151",
+    "volume": 3383561666,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-05-01T00:00:00+08:00",
+    "open": "3.756151",
+    "high": "3.768283",
+    "low": "3.722556",
+    "close": "3.741220",
+    "volume": 675811029,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-05-08T00:00:00+08:00",
+    "open": "3.747752",
+    "high": "3.812144",
+    "low": "3.667497",
+    "close": "3.669363",
+    "volume": 3008688711,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-05-15T00:00:00+08:00",
+    "open": "3.671229",
+    "high": "3.732821",
+    "low": "3.660031",
+    "close": "3.680562",
+    "volume": 2900471018,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-05-22T00:00:00+08:00",
+    "open": "3.679628",
+    "high": "3.718823",
+    "low": "3.557379",
+    "close": "3.592840",
+    "volume": 2817471081,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-05-29T00:00:00+08:00",
+    "open": "3.600306",
+    "high": "3.614304",
+    "low": "3.532182",
+    "close": "3.604972",
+    "volume": 3076940999,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-06-05T00:00:00+08:00",
+    "open": "3.599373",
+    "high": "3.615237",
+    "low": "3.530316",
+    "close": "3.587241",
+    "volume": 2055459051,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-06-12T00:00:00+08:00",
+    "open": "3.583508",
+    "high": "3.721622",
+    "low": "3.569510",
+    "close": "3.713224",
+    "volume": 2364740339,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-06-19T00:00:00+08:00",
+    "open": "3.713224",
+    "high": "3.713224",
+    "low": "3.625502",
+    "close": "3.627369",
+    "volume": 1243553421,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-06-26T00:00:00+08:00",
+    "open": "3.607771",
+    "high": "3.639500",
+    "low": "3.575109",
+    "close": "3.622703",
+    "volume": 2330524184,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-07-03T00:00:00+08:00",
+    "open": "3.630169",
+    "high": "3.675895",
+    "low": "3.601239",
+    "close": "3.609638",
+    "volume": 1646267791,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-07-10T00:00:00+08:00",
+    "open": "3.626435",
+    "high": "3.699225",
+    "low": "3.613371",
+    "close": "3.688027",
+    "volume": 2340885168,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-07-17T00:00:00+08:00",
+    "open": "3.682428",
+    "high": "3.682428",
+    "low": "3.616170",
+    "close": "3.630168",
+    "volume": 2815281159,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-07-24T00:00:00+08:00",
+    "open": "3.611504",
+    "high": "3.802811",
+    "low": "3.605905",
+    "close": "3.796279",
+    "volume": 4282957121,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-07-31T00:00:00+08:00",
+    "open": "3.826142",
+    "high": "3.864403",
+    "low": "3.757085",
+    "close": "3.820542",
+    "volume": 5876344980,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-08-07T00:00:00+08:00",
+    "open": "3.803745",
+    "high": "3.803745",
+    "low": "3.684294",
+    "close": "3.686161",
+    "volume": 5957320092,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-08-14T00:00:00+08:00",
+    "open": "3.657231",
+    "high": "3.672163",
+    "low": "3.593773",
+    "close": "3.594707",
+    "volume": 5142634101,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-08-21T00:00:00+08:00",
+    "open": "3.586308",
+    "high": "3.596573",
+    "low": "3.507919",
+    "close": "3.531249",
+    "volume": 5642063199,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-08-28T00:00:00+08:00",
+    "open": "3.743086",
+    "high": "3.743086",
+    "low": "3.555512",
+    "close": "3.604039",
+    "volume": 7683357896,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-09-04T00:00:00+08:00",
+    "open": "3.630168",
+    "high": "3.667497",
+    "low": "3.542447",
+    "close": "3.554579",
+    "volume": 4290140294,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-09-11T00:00:00+08:00",
+    "open": "3.555512",
+    "high": "3.603106",
+    "low": "3.517251",
+    "close": "3.534048",
+    "volume": 4562625968,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-09-18T00:00:00+08:00",
+    "open": "3.525650",
+    "high": "3.562978",
+    "low": "3.485522",
+    "close": "3.562044",
+    "volume": 4493381731,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-09-25T00:00:00+08:00",
+    "open": "3.551779",
+    "high": "3.554579",
+    "low": "3.505119",
+    "close": "3.509878",
+    "volume": 3762480443,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-10-02T00:00:00+08:00",
+    "open": "3.512584",
+    "high": "3.512584",
+    "low": "3.512584",
+    "close": "3.512584",
+    "volume": 0,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-10-09T00:00:00+08:00",
+    "open": "3.506052",
+    "high": "3.532182",
+    "low": "3.464991",
+    "close": "3.486455",
+    "volume": 4765261064,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-10-16T00:00:00+08:00",
+    "open": "3.486455",
+    "high": "3.488321",
+    "low": "3.326877",
+    "close": "3.342741",
+    "volume": 6268126419,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-10-23T00:00:00+08:00",
+    "open": "3.329677",
+    "high": "3.405266",
+    "low": "3.277417",
+    "close": "3.393134",
+    "volume": 8419878146,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-10-30T00:00:00+08:00",
+    "open": "3.380069",
+    "high": "3.434195",
+    "low": "3.378203",
+    "close": "3.408999",
+    "volume": 4746249068,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-11-06T00:00:00+08:00",
+    "open": "3.429529",
+    "high": "3.457525",
+    "low": "3.399667",
+    "close": "3.410865",
+    "volume": 4572246110,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-11-13T00:00:00+08:00",
+    "open": "3.414598",
+    "high": "3.444461",
+    "low": "3.370737",
+    "close": "3.391268",
+    "volume": 4501851219,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-11-20T00:00:00+08:00",
+    "open": "3.394068",
+    "high": "3.439795",
+    "low": "3.354873",
+    "close": "3.364205",
+    "volume": 4070663653,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-11-27T00:00:00+08:00",
+    "open": "3.363272",
+    "high": "3.363272",
+    "low": "3.283949",
+    "close": "3.311012",
+    "volume": 3791114594,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-12-04T00:00:00+08:00",
+    "open": "3.313812",
+    "high": "3.316611",
+    "low": "3.201827",
+    "close": "3.229823",
+    "volume": 4346961806,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-12-11T00:00:00+08:00",
+    "open": "3.210226",
+    "high": "3.263419",
+    "low": "3.177564",
+    "close": "3.184096",
+    "volume": 3989297168,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-12-18T00:00:00+08:00",
+    "open": "3.171032",
+    "high": "3.200894",
+    "low": "3.128104",
+    "close": "3.178497",
+    "volume": 6649532606,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2023-12-25T00:00:00+08:00",
+    "open": "3.177564",
+    "high": "3.270885",
+    "low": "3.152367",
+    "close": "3.267058",
+    "volume": 7519661006,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-01-01T00:00:00+08:00",
+    "open": "3.265285",
+    "high": "3.268085",
+    "low": "3.151434",
+    "close": "3.169165",
+    "volume": 5370502998,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-01-08T00:00:00+08:00",
+    "open": "3.162633",
+    "high": "3.175698",
+    "low": "3.109440",
+    "close": "3.125304",
+    "volume": 5927460687,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-01-15T00:00:00+08:00",
+    "open": "3.192213",
+    "high": "3.210323",
+    "low": "3.017780",
+    "close": "3.121677",
+    "volume": 11503970792,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-01-22T00:00:00+08:00",
+    "open": "3.112145",
+    "high": "3.193166",
+    "low": "3.036844",
+    "close": "3.173149",
+    "volume": 12150480225,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-01-29T00:00:00+08:00",
+    "open": "3.175056",
+    "high": "3.188400",
+    "low": "2.956776",
+    "close": "3.038750",
+    "volume": 9239446864,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-02-05T00:00:00+08:00",
+    "open": "3.010155",
+    "high": "3.208417",
+    "low": "2.965355",
+    "close": "3.204604",
+    "volume": 10529173556,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-02-12T00:00:00+08:00",
+    "open": "3.204604",
+    "high": "3.204604",
+    "low": "3.204604",
+    "close": "3.204604",
+    "volume": 0,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-02-19T00:00:00+08:00",
+    "open": "3.216042",
+    "high": "3.333284",
+    "low": "3.197932",
+    "close": "3.315173",
+    "volume": 6102825023,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-02-26T00:00:00+08:00",
+    "open": "3.313267",
+    "high": "3.374271",
+    "low": "3.272280",
+    "close": "3.364739",
+    "volume": 7728343989,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-03-04T00:00:00+08:00",
+    "open": "3.360927",
+    "high": "3.404773",
+    "low": "3.339956",
+    "close": "3.367599",
+    "volume": 7034419990,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-03-11T00:00:00+08:00",
+    "open": "3.365692",
+    "high": "3.430509",
+    "low": "3.357114",
+    "close": "3.394288",
+    "volume": 4463376583,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-03-18T00:00:00+08:00",
+    "open": "3.394288",
+    "high": "3.431462",
+    "low": "3.347582",
+    "close": "3.373318",
+    "volume": 4050541150,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-03-25T00:00:00+08:00",
+    "open": "3.364739",
+    "high": "3.388569",
+    "low": "3.318033",
+    "close": "3.360926",
+    "volume": 3735447636,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-04-01T00:00:00+08:00",
+    "open": "3.374271",
+    "high": "3.425743",
+    "low": "3.373318",
+    "close": "3.391428",
+    "volume": 2274800327,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-04-08T00:00:00+08:00",
+    "open": "3.383803",
+    "high": "3.389522",
+    "low": "3.295157",
+    "close": "3.303735",
+    "volume": 3205785728,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-04-15T00:00:00+08:00",
+    "open": "3.303735",
+    "high": "3.425743",
+    "low": "3.301829",
+    "close": "3.365692",
+    "volume": 4584145019,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-04-22T00:00:00+08:00",
+    "open": "3.364739",
+    "high": "3.413352",
+    "low": "3.325659",
+    "close": "3.405726",
+    "volume": 4301330873,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-04-29T00:00:00+08:00",
+    "open": "3.409539",
+    "high": "3.467683",
+    "low": "3.404773",
+    "close": "3.429556",
+    "volume": 2353431440,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-05-06T00:00:00+08:00",
+    "open": "3.469590",
+    "high": "3.498185",
+    "low": "3.448619",
+    "close": "3.486747",
+    "volume": 4149153008,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-05-13T00:00:00+08:00",
+    "open": "3.466730",
+    "high": "3.506763",
+    "low": "3.447666",
+    "close": "3.503904",
+    "volume": 4168016984,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-05-20T00:00:00+08:00",
+    "open": "3.509623",
+    "high": "3.526781",
+    "low": "3.429556",
+    "close": "3.433368",
+    "volume": 3650284587,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-05-27T00:00:00+08:00",
+    "open": "3.436228",
+    "high": "3.463870",
+    "low": "3.412398",
+    "close": "3.414305",
+    "volume": 3317764410,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-06-03T00:00:00+08:00",
+    "open": "3.412398",
+    "high": "3.460058",
+    "low": "3.388569",
+    "close": "3.408586",
+    "volume": 4028015357,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-06-10T00:00:00+08:00",
+    "open": "3.408586",
+    "high": "3.408586",
+    "low": "3.352348",
+    "close": "3.387615",
+    "volume": 2672659961,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-06-17T00:00:00+08:00",
+    "open": "3.371411",
+    "high": "3.398101",
+    "low": "3.329471",
+    "close": "3.351395",
+    "volume": 3993435440,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-06-24T00:00:00+08:00",
+    "open": "3.338050",
+    "high": "3.360927",
+    "low": "3.297063",
+    "close": "3.324038",
+    "volume": 7580741879,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-07-01T00:00:00+08:00",
+    "open": "3.323752",
+    "high": "3.346629",
+    "low": "3.267514",
+    "close": "3.296110",
+    "volume": 5440541169,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-07-08T00:00:00+08:00",
+    "open": "3.289438",
+    "high": "3.359020",
+    "low": "3.257983",
+    "close": "3.354254",
+    "volume": 4515610409,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-07-15T00:00:00+08:00",
+    "open": "3.346629",
+    "high": "3.437181",
+    "low": "3.343769",
+    "close": "3.431462",
+    "volume": 10254925424,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-07-22T00:00:00+08:00",
+    "open": "3.426696",
+    "high": "3.429556",
+    "low": "3.279906",
+    "close": "3.311361",
+    "volume": 7530447343,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-07-29T00:00:00+08:00",
+    "open": "3.307548",
+    "high": "3.350442",
+    "low": "3.257029",
+    "close": "3.285625",
+    "volume": 5755245734,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-08-05T00:00:00+08:00",
+    "open": "3.270374",
+    "high": "3.311361",
+    "low": "3.222715",
+    "close": "3.234153",
+    "volume": 5382643077,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-08-12T00:00:00+08:00",
+    "open": "3.232247",
+    "high": "3.262749",
+    "low": "3.203651",
+    "close": "3.250357",
+    "volume": 5312525891,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-08-19T00:00:00+08:00",
+    "open": "3.249404",
+    "high": "3.282765",
+    "low": "3.213183",
+    "close": "3.234153",
+    "volume": 5468492186,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-08-26T00:00:00+08:00",
+    "open": "3.236059",
+    "high": "3.262749",
+    "low": "3.183634",
+    "close": "3.233200",
+    "volume": 7904627841,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-09-02T00:00:00+08:00",
+    "open": "3.222715",
+    "high": "3.224621",
+    "low": "3.145507",
+    "close": "3.147413",
+    "volume": 5501036065,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-09-09T00:00:00+08:00",
+    "open": "3.137881",
+    "high": "3.141694",
+    "low": "3.075924",
+    "close": "3.076878",
+    "volume": 4159290144,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-09-16T00:00:00+08:00",
+    "open": "3.076878",
+    "high": "3.132162",
+    "low": "3.064486",
+    "close": "3.120724",
+    "volume": 5166888073,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-09-23T00:00:00+08:00",
+    "open": "3.115958",
+    "high": "3.748872",
+    "low": "3.110239",
+    "close": "3.687868",
+    "volume": 15055602990,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-09-30T00:00:00+08:00",
+    "open": "3.819408",
+    "high": "4.041499",
+    "low": "3.694541",
+    "close": "4.034827",
+    "volume": 6370234083,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-10-07T00:00:00+08:00",
+    "open": "4.034827",
+    "high": "4.438024",
+    "low": "3.739340",
+    "close": "3.790812",
+    "volume": 21908096826,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-10-14T00:00:00+08:00",
+    "open": "3.800344",
+    "high": "3.925211",
+    "low": "3.665945",
+    "close": "3.827986",
+    "volume": 14436275630,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-10-21T00:00:00+08:00",
+    "open": "3.828940",
+    "high": "3.905195",
+    "low": "3.793672",
+    "close": "3.850863",
+    "volume": 9746404644,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-10-28T00:00:00+08:00",
+    "open": "3.846097",
+    "high": "3.888037",
+    "low": "3.753638",
+    "close": "3.792719",
+    "volume": 8585200684,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-11-04T00:00:00+08:00",
+    "open": "3.795578",
+    "high": "4.089159",
+    "low": "3.785093",
+    "close": "3.997653",
+    "volume": 11782495674,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-11-11T00:00:00+08:00",
+    "open": "3.957619",
+    "high": "4.068189",
+    "low": "3.860395",
+    "close": "3.865160",
+    "volume": 9302205061,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-11-18T00:00:00+08:00",
+    "open": "3.880412",
+    "high": "3.925211",
+    "low": "3.761264",
+    "close": "3.767936",
+    "volume": 7631829869,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-11-25T00:00:00+08:00",
+    "open": "3.769842",
+    "high": "3.857535",
+    "low": "3.711698",
+    "close": "3.813689",
+    "volume": 6197959914,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-12-02T00:00:00+08:00",
+    "open": "3.809876",
+    "high": "3.893756",
+    "low": "3.800344",
+    "close": "3.867067",
+    "volume": 6048758706,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-12-09T00:00:00+08:00",
+    "open": "3.864207",
+    "high": "4.001466",
+    "low": "3.824174",
+    "close": "3.831799",
+    "volume": 8694680131,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-12-16T00:00:00+08:00",
+    "open": "3.829893",
+    "high": "3.855629",
+    "low": "3.794625",
+    "close": "3.829893",
+    "volume": 5591026116,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-12-23T00:00:00+08:00",
+    "open": "3.828940",
+    "high": "3.907101",
+    "low": "3.827033",
+    "close": "3.876599",
+    "volume": 6333170439,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2024-12-30T00:00:00+08:00",
+    "open": "3.875646",
+    "high": "3.902335",
+    "low": "3.672617",
+    "close": "3.687868",
+    "volume": 6921555187,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-01-06T00:00:00+08:00",
+    "open": "3.684056",
+    "high": "3.716464",
+    "low": "3.636397",
+    "close": "3.644022",
+    "volume": 5310083046,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-01-13T00:00:00+08:00",
+    "open": "3.623052",
+    "high": "3.748872",
+    "low": "3.615427",
+    "close": "3.715511",
+    "volume": 5292695021,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-01-20T00:00:00+08:00",
+    "open": "3.737434",
+    "high": "3.772702",
+    "low": "3.686915",
+    "close": "3.745059",
+    "volume": 4946141723,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-01-27T00:00:00+08:00",
+    "open": "3.751732",
+    "high": "3.760310",
+    "low": "3.721230",
+    "close": "3.724089",
+    "volume": 1305384964,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-02-03T00:00:00+08:00",
+    "open": "3.724089",
+    "high": "3.826080",
+    "low": "3.697400",
+    "close": "3.801297",
+    "volume": 4070817565,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-02-10T00:00:00+08:00",
+    "open": "3.802251",
+    "high": "3.850863",
+    "low": "3.774608",
+    "close": "3.845144",
+    "volume": 5713505479,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-02-17T00:00:00+08:00",
+    "open": "3.854676",
+    "high": "3.888990",
+    "low": "3.808923",
+    "close": "3.884224",
+    "volume": 6055639939,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-02-24T00:00:00+08:00",
+    "open": "3.879459",
+    "high": "3.897569",
+    "low": "3.795578",
+    "close": "3.807016",
+    "volume": 6234645984,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-03-03T00:00:00+08:00",
+    "open": "3.807970",
+    "high": "3.871833",
+    "low": "3.766983",
+    "close": "3.849910",
+    "volume": 5876859988,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-03-10T00:00:00+08:00",
+    "open": "3.848003",
+    "high": "3.920445",
+    "low": "3.803204",
+    "close": "3.913773",
+    "volume": 5599694504,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-03-17T00:00:00+08:00",
+    "open": "3.925211",
+    "high": "3.929977",
+    "low": "3.812736",
+    "close": "3.822268",
+    "volume": 4714335876,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-03-24T00:00:00+08:00",
+    "open": "3.821314",
+    "high": "3.860395",
+    "low": "3.807969",
+    "close": "3.820361",
+    "volume": 3682839070,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-03-31T00:00:00+08:00",
+    "open": "3.816549",
+    "high": "3.835612",
+    "low": "3.758404",
+    "close": "3.773655",
+    "volume": 3260636796,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-04-07T00:00:00+08:00",
+    "open": "3.622099",
+    "high": "3.670711",
+    "low": "3.435275",
+    "close": "3.660226",
+    "volume": 16404338568,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-04-14T00:00:00+08:00",
+    "open": "3.678337",
+    "high": "3.697400",
+    "low": "3.632584",
+    "close": "3.691681",
+    "volume": 6865889537,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-04-21T00:00:00+08:00",
+    "open": "3.684056",
+    "high": "3.724089",
+    "low": "3.676430",
+    "close": "3.700260",
+    "volume": 3144734165,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-04-28T00:00:00+08:00",
+    "open": "3.701213",
+    "high": "3.704073",
+    "low": "3.681196",
+    "close": "3.685009",
+    "volume": 1619897700,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-05-05T00:00:00+08:00",
+    "open": "3.685009",
+    "high": "3.780327",
+    "low": "3.685009",
+    "close": "3.760310",
+    "volume": 3240287028,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-05-12T00:00:00+08:00",
+    "open": "3.777468",
+    "high": "3.875646",
+    "low": "3.771749",
+    "close": "3.802251",
+    "volume": 4392697470,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-05-19T00:00:00+08:00",
+    "open": "3.797485",
+    "high": "3.842284",
+    "low": "3.779374",
+    "close": "3.801297",
+    "volume": 3003909784,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-05-26T00:00:00+08:00",
+    "open": "3.795578",
+    "high": "3.806063",
+    "low": "3.747919",
+    "close": "3.773655",
+    "volume": 3486764468,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-06-02T00:00:00+08:00",
+    "open": "3.773655",
+    "high": "3.811782",
+    "low": "3.757451",
+    "close": "3.799391",
+    "volume": 2082176676,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-06-09T00:00:00+08:00",
+    "open": "3.802251",
+    "high": "3.835612",
+    "low": "3.772702",
+    "close": "3.793672",
+    "volume": 3843763456,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-06-16T00:00:00+08:00",
+    "open": "3.873403",
+    "high": "3.895820",
+    "low": "3.765212",
+    "close": "3.779833",
+    "volume": 2636854166,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-06-23T00:00:00+08:00",
+    "open": "3.771061",
+    "high": "3.911415",
+    "low": "3.764238",
+    "close": "3.862681",
+    "volume": 5705574971,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-06-30T00:00:00+08:00",
+    "open": "3.860732",
+    "high": "3.962099",
+    "low": "3.855858",
+    "close": "3.929935",
+    "volume": 3980472587,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-07-07T00:00:00+08:00",
+    "open": "3.924086",
+    "high": "4.025454",
+    "low": "3.903618",
+    "close": "3.975745",
+    "volume": 3559403795,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-07-14T00:00:00+08:00",
+    "open": "3.974770",
+    "high": "4.031302",
+    "low": "3.950403",
+    "close": "4.027403",
+    "volume": 3418163269,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-07-21T00:00:00+08:00",
+    "open": "4.032277",
+    "high": "4.126821",
+    "low": "4.029352",
+    "close": "4.096606",
+    "volume": 4549623833,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-07-28T00:00:00+08:00",
+    "open": "4.096606",
+    "high": "4.157036",
+    "low": "4.013757",
+    "close": "4.028378",
+    "volume": 4093481683,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-08-04T00:00:00+08:00",
+    "open": "4.017656",
+    "high": "4.103429",
+    "low": "4.012783",
+    "close": "4.077112",
+    "volume": 2349608195,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-08-11T00:00:00+08:00",
+    "open": "4.077112",
+    "high": "4.194074",
+    "low": "4.077112",
+    "close": "4.186277",
+    "volume": 3889248241,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-08-18T00:00:00+08:00",
+    "open": "4.189201",
+    "high": "4.370493",
+    "low": "4.158986",
+    "close": "4.365619",
+    "volume": 5435262416,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-08-25T00:00:00+08:00",
+    "open": "4.387062",
+    "high": "4.496227",
+    "low": "4.339303",
+    "close": "4.484531",
+    "volume": 6614549434,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-09-01T00:00:00+08:00",
+    "open": "4.490379",
+    "high": "4.525468",
+    "low": "4.304214",
+    "close": "4.438721",
+    "volume": 5628416636,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-09-08T00:00:00+08:00",
+    "open": "4.438721",
+    "high": "4.545936",
+    "low": "4.388037",
+    "close": "4.504025",
+    "volume": 4217234710,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-09-15T00:00:00+08:00",
+    "open": "4.504999",
+    "high": "4.557632",
+    "low": "4.438720",
+    "close": "4.487455",
+    "volume": 4144489282,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-09-22T00:00:00+08:00",
+    "open": "4.487455",
+    "high": "4.598569",
+    "low": "4.442619",
+    "close": "4.533265",
+    "volume": 4175404793,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-09-29T00:00:00+08:00",
+    "open": "4.530341",
+    "high": "4.634633",
+    "low": "4.522544",
+    "close": "4.620987",
+    "volume": 1935817447,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-10-06T00:00:00+08:00",
+    "open": "4.620987",
+    "high": "4.713582",
+    "low": "4.584923",
+    "close": "4.599544",
+    "volume": 2071733167,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-10-13T00:00:00+08:00",
+    "open": "4.481607",
+    "high": "4.626835",
+    "low": "4.479658",
+    "close": "4.506949",
+    "volume": 4777668521,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-10-20T00:00:00+08:00",
+    "open": "4.533265",
+    "high": "4.603443",
+    "low": "4.506949",
+    "close": "4.593696",
+    "volume": 2978113363,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-10-27T00:00:00+08:00",
+    "open": "4.686291",
+    "high": "4.750620",
+    "low": "4.634633",
+    "close": "4.635607",
+    "volume": 4412782880,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-11-03T00:00:00+08:00",
+    "open": "4.631709",
+    "high": "4.691165",
+    "low": "4.549835",
+    "close": "4.673620",
+    "volume": 4012786209,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-11-10T00:00:00+08:00",
+    "open": "4.675570",
+    "high": "4.701886",
+    "low": "4.611240",
+    "close": "4.620987",
+    "volume": 2776820856,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-11-17T00:00:00+08:00",
+    "open": "4.610266",
+    "high": "4.620012",
+    "low": "4.446518",
+    "close": "4.448468",
+    "volume": 4524592267,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-11-24T00:00:00+08:00",
+    "open": "4.463088",
+    "high": "4.555683",
+    "low": "4.418252",
+    "close": "4.517671",
+    "volume": 3964371070,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-12-01T00:00:00+08:00",
+    "open": "4.528392",
+    "high": "4.590772",
+    "low": "4.510847",
+    "close": "4.579075",
+    "volume": 2446602940,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-12-08T00:00:00+08:00",
+    "open": "4.591747",
+    "high": "4.633658",
+    "low": "4.530341",
+    "close": "4.575177",
+    "volume": 3634323859,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-12-15T00:00:00+08:00",
+    "open": "4.555683",
+    "high": "4.595645",
+    "low": "4.434822",
+    "close": "4.569329",
+    "volume": 4056561625,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-12-22T00:00:00+08:00",
+    "open": "4.582974",
+    "high": "4.679468",
+    "low": "4.582974",
+    "close": "4.662899",
+    "volume": 3422216273,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2025-12-29T00:00:00+08:00",
+    "open": "4.659000",
+    "high": "4.672646",
+    "low": "4.621962",
+    "close": "4.632683",
+    "volume": 1996958494,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-01-05T00:00:00+08:00",
+    "open": "4.661924",
+    "high": "4.802279",
+    "low": "4.659000",
+    "close": "4.761342",
+    "volume": 4820411620,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-01-12T00:00:00+08:00",
+    "open": "4.769139",
+    "high": "4.839317",
+    "low": "4.715531",
+    "close": "4.736000",
+    "volume": 15278896144,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-01-19T00:00:00+08:00",
+    "open": "4.737000",
+    "high": "4.769000",
+    "low": "4.687000",
+    "close": "4.704000",
+    "volume": 21789901800,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-01-26T00:00:00+08:00",
+    "open": "4.712000",
+    "high": "4.779000",
+    "low": "4.642000",
+    "close": "4.711000",
+    "volume": 23992709690,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-02-02T00:00:00+08:00",
+    "open": "4.680000",
+    "high": "4.719000",
+    "low": "4.585000",
+    "close": "4.649000",
+    "volume": 6572241535,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-02-09T00:00:00+08:00",
+    "open": "4.695000",
+    "high": "4.739000",
+    "low": "4.667000",
+    "close": "4.671000",
+    "volume": 3519029419,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-02-16T00:00:00+08:00",
+    "open": "4.671000",
+    "high": "4.671000",
+    "low": "4.671000",
+    "close": "4.671000",
+    "volume": 0,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-02-23T00:00:00+08:00",
+    "open": "4.671000",
+    "high": "4.778000",
+    "low": "4.671000",
+    "close": "4.725000",
+    "volume": 2870266086,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-03-02T00:00:00+08:00",
+    "open": "4.694000",
+    "high": "4.751000",
+    "low": "4.587000",
+    "close": "4.667000",
+    "volume": 4110946229,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-03-09T00:00:00+08:00",
+    "open": "4.623000",
+    "high": "4.719000",
+    "low": "4.560000",
+    "close": "4.677000",
+    "volume": 2646319529,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-03-16T00:00:00+08:00",
+    "open": "4.675000",
+    "high": "4.731000",
+    "low": "4.573000",
+    "close": "4.576000",
+    "volume": 3430978447,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-03-23T00:00:00+08:00",
+    "open": "4.528000",
+    "high": "4.549000",
+    "low": "4.405000",
+    "close": "4.508000",
+    "volume": 4278579087,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-03-30T00:00:00+08:00",
+    "open": "4.462000",
+    "high": "4.542000",
+    "low": "4.446000",
+    "close": "4.454000",
+    "volume": 2468248604,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-04-06T00:00:00+08:00",
+    "open": "4.454000",
+    "high": "4.664000",
+    "low": "4.431000",
+    "close": "4.642000",
+    "volume": 3036795735,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-04-13T00:00:00+08:00",
+    "open": "4.629000",
+    "high": "4.750000",
+    "low": "4.623000",
+    "close": "4.739000",
+    "volume": 3085914778,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-04-20T00:00:00+08:00",
+    "open": "4.735000",
+    "high": "4.834000",
+    "low": "4.728000",
+    "close": "4.782000",
+    "volume": 4138999237,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-04-27T00:00:00+08:00",
+    "open": "4.786000",
+    "high": "4.841000",
+    "low": "4.755000",
+    "close": "4.824000",
+    "volume": 4723922425,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-05-04T00:00:00+08:00",
+    "open": "4.824000",
+    "high": "4.914000",
+    "low": "4.824000",
+    "close": "4.886000",
+    "volume": 5215970325,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-05-11T00:00:00+08:00",
+    "open": "4.911000",
+    "high": "5.041000",
+    "low": "4.852000",
+    "close": "4.878000",
+    "volume": 6467374251,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-05-18T00:00:00+08:00",
+    "open": "4.855000",
+    "high": "4.954000",
+    "low": "4.789000",
+    "close": "4.862000",
+    "volume": 5041425527,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-05-25T00:00:00+08:00",
+    "open": "4.880000",
+    "high": "4.993000",
+    "low": "4.866000",
+    "close": "4.923000",
+    "volume": 4330587898,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-06-01T00:00:00+08:00",
+    "open": "4.923000",
+    "high": "5.016000",
+    "low": "4.825000",
+    "close": "4.843000",
+    "volume": 3168519369,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-06-08T00:00:00+08:00",
+    "open": "4.790000",
+    "high": "4.846000",
+    "low": "4.705000",
+    "close": "4.818000",
+    "volume": 2949553805,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-06-15T00:00:00+08:00",
+    "open": "4.858000",
+    "high": "5.001000",
+    "low": "4.839000",
+    "close": "4.984000",
+    "volume": 5216360122,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-06-22T00:00:00+08:00",
+    "open": "4.983000",
+    "high": "5.095000",
+    "low": "4.880000",
+    "close": "4.907000",
+    "volume": 10720018292,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-06-29T00:00:00+08:00",
+    "open": "4.897000",
+    "high": "5.054000",
+    "low": "4.828000",
+    "close": "4.876000",
+    "volume": 7844630415,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-07-06T00:00:00+08:00",
+    "open": "4.900000",
+    "high": "4.949000",
+    "low": "4.777000",
+    "close": "4.829000",
+    "volume": 3581512631,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-07-13T00:00:00+08:00",
+    "open": "4.802000",
+    "high": "4.870000",
+    "low": "4.546000",
+    "close": "4.589000",
+    "volume": 8972124216,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-07-20T00:00:00+08:00",
+    "open": "4.630000",
+    "high": "4.823000",
+    "low": "4.577000",
+    "close": "4.701000",
+    "volume": 9620265566,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-07-27T00:00:00+08:00",
+    "open": "4.702000",
+    "high": "4.758000",
+    "low": "4.536000",
+    "close": "4.653000",
+    "volume": 7179859279,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-08-03T00:00:00+08:00",
+    "open": "4.624000",
+    "high": "4.764000",
+    "low": "4.591000",
+    "close": "4.751000",
+    "volume": 5345892390,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  },
+  {
+    "timestamp": "2026-08-10T00:00:00+08:00",
+    "open": "4.755000",
+    "high": "4.786000",
+    "low": "4.701000",
+    "close": "4.726000",
+    "volume": 3598956548,
+    "turnover": "0",
+    "trade_session": "Intraday"
+  }
+]
