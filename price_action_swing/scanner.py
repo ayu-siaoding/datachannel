@@ -11,8 +11,9 @@ from pathlib import Path
 from bar_counter import find_h_setup, two_leg_pullback
 from pa_core import parse_daily_bars
 from position_sizer import size_position
+from reversal import find_reversal_setup
 from signals import classify_context, detect_signal_at
-from stop_loss import build_long_stop_plan
+from stop_loss import build_long_stop_plan, build_reversal_stop_plan
 
 # 默认扫描池：宽基 ETF + 高流动性龙头
 DEFAULT_UNIVERSE = {
@@ -71,12 +72,108 @@ def score_setup(ctx, h_setup, tlp, stop_plan) -> tuple[int, list[str]]:
     return max(5, min(90, score)), reasons
 
 
-def analyze_symbol(symbol: str, name: str, bars_raw: list) -> dict | None:
+def score_reversal_setup(ctx, rev, stop_plan) -> tuple[int, list[str]]:
+    score = 45
+    reasons: list[str] = ["反转基线 45（胜率通常不高，靠盈亏比）"]
+
+    if rev.quality == "A":
+        score += 25
+        reasons.append(f"{rev.label} 合格反转 +25")
+    elif rev.quality == "B-watch":
+        score += 5
+        reasons.append(f"{rev.label} 仅观察（窄通道/强趋势等 R2） +5")
+
+    if rev.count >= 2:
+        score += 15
+        reasons.append("第二入场点 R2 +15")
+
+    if ctx.cycle == "range":
+        score += 10
+        reasons.append("震荡区间反转 +10")
+    elif ctx.channel_width == "wide":
+        score += 5
+        reasons.append("宽通道 +5")
+    elif ctx.channel_width == "narrow" and rev.count < 2:
+        score -= 15
+        reasons.append("窄通道第一次反转 -15")
+
+    if ctx.cycle in ("spike_up", "spike_down"):
+        score -= 20
+        reasons.append("强趋势 spike，反转风险高 -20")
+
+    if stop_plan and stop_plan.risk_per_share / stop_plan.entry < 0.04:
+        score += 5
+        reasons.append("止损距离合理 +5")
+    elif stop_plan and stop_plan.risk_per_share / stop_plan.entry > 0.06:
+        score -= 10
+        reasons.append("止损过宽 -10")
+
+    return max(5, min(90, score)), reasons
+
+
+def analyze_symbol(symbol: str, name: str, bars_raw: list, mode: str = "trend") -> dict | None:
     bars = parse_daily_bars(bars_raw)
     if len(bars) < 30:
         return None
 
     ctx = classify_context(bars)
+    last = bars[-1]
+
+    if mode == "reversal":
+        rev = find_reversal_setup(bars, "long")
+        if not rev:
+            return {
+                "symbol": symbol,
+                "name": name,
+                "action": "观望",
+                "mode": "reversal",
+                "score": 15,
+                "close": last.close,
+                "context": ctx.always_in,
+                "cycle": ctx.cycle,
+                "channel_width": ctx.channel_width,
+                "note": "无合格强势反转 K",
+            }
+
+        stop_plan = build_reversal_stop_plan(
+            bars, rev.entry, rev.stop, "long", ctx.ema20
+        )
+        score, reasons = score_reversal_setup(ctx, rev, stop_plan)
+
+        action = "观望"
+        if score >= 70 and rev.quality == "A":
+            action = "反转观察"
+        elif score >= 55 and rev.count >= 2:
+            action = "仅观察"
+
+        pos = size_position(200, rev.entry, stop_plan.initial_stop)
+
+        return {
+            "symbol": symbol,
+            "name": name,
+            "action": action,
+            "mode": "reversal",
+            "score": score,
+            "close": last.close,
+            "date": last.date,
+            "context": ctx.always_in,
+            "cycle": ctx.cycle,
+            "channel_width": ctx.channel_width,
+            "context_note": ctx.note,
+            "reversal": rev.label,
+            "reversal_quality": rev.quality,
+            "order_type": rev.order_type,
+            "entry": rev.entry,
+            "stop": stop_plan.initial_stop,
+            "risk_pct": round(stop_plan.risk_per_share / rev.entry * 100, 2),
+            "target_mm": stop_plan.target_measure,
+            "target_swing": stop_plan.target_swing,
+            "trail": stop_plan.trail_rule,
+            "reversal_note": rev.note,
+            "score_reasons": reasons,
+            "sample_shares_200w": pos["shares"],
+        }
+
     h = find_h_setup(bars)
     tlp = two_leg_pullback(bars)
     last = bars[-1]
@@ -126,6 +223,7 @@ def analyze_symbol(symbol: str, name: str, bars_raw: list) -> dict | None:
         "symbol": symbol,
         "name": name,
         "action": action,
+        "mode": "trend",
         "score": score,
         "close": last.close,
         "date": last.date,
@@ -157,6 +255,7 @@ def load_data_dir(data_dir: Path) -> dict[str, list]:
 def main() -> None:
     p = argparse.ArgumentParser(description="Al Brooks 波段扫描")
     p.add_argument("--data-dir", type=Path, help="日K JSON 目录，文件名如 510300.SH.json")
+    p.add_argument("--mode", choices=["trend", "reversal", "both"], default="trend", help="扫描模式")
     p.add_argument("--json", action="store_true", help="JSON 输出")
     args = p.parse_args()
 
@@ -167,13 +266,15 @@ def main() -> None:
 
     dataset = load_data_dir(args.data_dir)
     results = []
+    modes = ["trend", "reversal"] if args.mode == "both" else [args.mode]
     for sym, name in DEFAULT_UNIVERSE.items():
         raw = dataset.get(sym)
         if not raw:
             continue
-        r = analyze_symbol(sym, name, raw)
-        if r:
-            results.append(r)
+        for m in modes:
+            r = analyze_symbol(sym, name, raw, mode=m)
+            if r:
+                results.append(r)
 
     results.sort(key=lambda x: x.get("score", 0), reverse=True)
 
@@ -181,18 +282,27 @@ def main() -> None:
         print(json.dumps(results, ensure_ascii=False, indent=2))
         return
 
+    title = "Al Brooks 价格行为波段扫描"
+    if args.mode == "reversal":
+        title += "（反转模式）"
+    elif args.mode == "both":
+        title += "（顺势+反转）"
     print("=" * 60)
-    print("Al Brooks 价格行为波段扫描")
+    print(title)
     print("=" * 60)
     if not results:
         print("无数据。请先写入 sample_data/*.json")
         return
 
     for r in results:
-        print(f"\n[{r['action']}] {r['symbol']} {r['name']}  分={r['score']}")
+        mode_tag = f"[{r.get('mode', 'trend')}]"
+        print(f"\n[{r['action']}] {mode_tag} {r['symbol']} {r['name']}  分={r['score']}")
         print(f"  收盘 {r['close']} | 背景 {r['context']}/{r['cycle']}")
         if r.get("h_setup"):
             print(f"  数K线: {r['h_setup']} ({r['h_quality']})")
+        if r.get("reversal"):
+            print(f"  反转: {r['reversal']} ({r['reversal_quality']}) {r.get('order_type', '')}")
+            print(f"  {r.get('reversal_note', '')}")
         if r.get("stop"):
             print(f"  入场≈{r['entry']} 止损={r['stop']} 风险={r['risk_pct']}%")
             print(f"  目标 MM={r.get('target_mm')} 前高={r.get('target_swing')}")

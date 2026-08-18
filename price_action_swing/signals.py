@@ -30,6 +30,7 @@ class SignalBar:
 class MarketContext:
     always_in: str  # bull / bear / range
     cycle: str  # spike_up / channel_up / range / channel_down / spike_down
+    channel_width: str  # narrow / wide / none
     ema20: float | None
     note: str
 
@@ -60,10 +61,54 @@ def is_bear_signal_bar(b: Bar, avg_rng: float) -> bool:
     return True
 
 
+def is_strong_reversal_bull_bar(b: Bar, avg_rng: float) -> bool:
+    """强势反转阳线：大实体 + 收在极值附近 + 体积够。"""
+    rng = b.high - b.low
+    if rng <= 0 or rng < avg_rng * 0.55:
+        return False
+    if not is_bull_bar(b):
+        return False
+    if bar_body_ratio(b) < 0.50:
+        return False
+    if close_position(b) < 0.80:
+        return False
+    return True
+
+
+def is_strong_reversal_bear_bar(b: Bar, avg_rng: float) -> bool:
+    """强势反转阴线：大实体 + 收在极值附近 + 体积够。"""
+    rng = b.high - b.low
+    if rng <= 0 or rng < avg_rng * 0.55:
+        return False
+    if not is_bear_bar(b):
+        return False
+    if bar_body_ratio(b) < 0.50:
+        return False
+    if close_position(b) > 0.20:
+        return False
+    return True
+
+
+def _channel_width(bars: list[Bar], end: int, ema_val: float) -> str:
+    """窄通道：沿 EMA20 窄幅运行；宽通道：波动较大。"""
+    window = bars[max(0, end - 9) : end + 1]
+    if not window:
+        return "none"
+    ranges = [b.high - b.low for b in window]
+    avg = sum(ranges) / len(ranges)
+    global_avg = avg_range(bars, end)
+    ema_dev = sum(abs(b.close - ema_val) / ema_val for b in window) / len(window)
+    if avg < global_avg * 0.75 and ema_dev < 0.012:
+        return "narrow"
+    if avg >= global_avg * 0.85 or ema_dev >= 0.018:
+        return "wide"
+    return "wide"
+
+
 def classify_context(bars: list[Bar]) -> MarketContext:
-    """简化版 Always In + 市场周期。"""
+    """简化版 Always In + 市场周期 + 窄/宽通道。"""
     if len(bars) < 25:
-        return MarketContext("range", "range", None, "数据不足")
+        return MarketContext("range", "range", "none", None, "数据不足")
 
     closes = [b.close for b in bars]
     e20 = ema(closes, 20)
@@ -72,7 +117,9 @@ def classify_context(bars: list[Bar]) -> MarketContext:
     b = bars[last]
 
     if ema_val is None:
-        return MarketContext("range", "range", None, "EMA20 未就绪")
+        return MarketContext("range", "range", "none", None, "EMA20 未就绪")
+
+    ch_width = _channel_width(bars, last, ema_val)
 
     above = b.close > ema_val
     sh = recent_swing_high(bars, last)
@@ -87,26 +134,32 @@ def classify_context(bars: list[Bar]) -> MarketContext:
     # Spike：大阳线/大阴线
     if (b.high - b.low) > avg_rng * 1.6:
         if is_bull_bar(b) and above:
-            return MarketContext("bull", "spike_up", ema_val, "强势突破 K，顺势只找回调买")
+            return MarketContext(
+                "bull", "spike_up", ch_width, ema_val, "强势突破 K，顺势只找回调买；反转等 R2"
+            )
         if is_bear_bar(b) and not above:
-            return MarketContext("bear", "spike_down", ema_val, "强势下跌 K，不做多")
+            return MarketContext("bear", "spike_down", ch_width, ema_val, "强势下跌 K，不做多")
 
     # 通道：沿 EMA20 运行
     touches = sum(1 for x in bars[last - 9 : last + 1] if abs(x.low - ema_val) / ema_val < 0.015)
     if above and bull_cnt >= 3 and (sl is None or sl[1] > ema_val * 0.98):
         cycle = "channel_up" if touches >= 1 else "channel_up"
-        return MarketContext("bull", cycle, ema_val, "多头通道，优先 H2 回调买")
+        width_note = "窄通道" if ch_width == "narrow" else "宽通道"
+        return MarketContext(
+            "bull", cycle, ch_width, ema_val, f"多头{width_note}，优先 H2 回调买；反转等 R2"
+        )
 
     if not above and bear_cnt >= 3:
-        return MarketContext("bear", "channel_down", ema_val, "空头通道，不做多")
+        width_note = "窄通道" if ch_width == "narrow" else "宽通道"
+        return MarketContext("bear", "channel_down", ch_width, ema_val, f"空头{width_note}，不做多")
 
     # 震荡
     if sh and sl:
         mid = (sh[1] + sl[1]) / 2
         if abs(b.close - mid) / mid < 0.02:
-            return MarketContext("range", "range", ema_val, "区间中部，禁止开仓")
+            return MarketContext("range", "range", ch_width, ema_val, "区间中部，禁止开仓")
 
-    return MarketContext("range", "range", ema_val, "无明确趋势，观望")
+    return MarketContext("range", "range", ch_width, ema_val, "无明确趋势，观望")
 
 
 def detect_signal_at(bars: list[Bar], i: int, direction: str = "long") -> SignalBar | None:
