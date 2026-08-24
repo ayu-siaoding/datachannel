@@ -14,10 +14,19 @@
 
 ```
 ai_tech_watchlist/
-├── config/watchlist.yaml   # 主配置（美股 + A 股四层）
-├── load.py                 # 加载与 CLI
+├── config/watchlist.yaml        # 主配置（美股 + A 股四层）
+├── config/tail_1425_rules.yaml  # A 股尾盘 14:25 规则（3880+资金+筹码+15分）
+├── docs/tail_1425_checklist.md  # 每日勾选清单（打印用）
+├── load.py                      # 加载与 CLI
 └── README.md
 ```
+
+## A 股尾盘 14:25 清单
+
+机动仓（30%）T+1 用法：**3880 大盘 + 主力净流入 + 筹码 + 15 分钟站稳**。
+
+- 每日 **14:25** 打开 [`docs/tail_1425_checklist.md`](docs/tail_1425_checklist.md) 逐项勾选
+- 规则阈值见 [`config/tail_1425_rules.yaml`](config/tail_1425_rules.yaml)
 
 ## 产业链四层
 
