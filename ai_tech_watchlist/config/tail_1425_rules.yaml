@@ -1,0 +1,52 @@
+# A 股尾盘 14:25 规则配置（供脚本/人工对照）
+# 方法：3880 + 资金 + 筹码 + 15 分钟站稳
+
+market:
+  index: "000001"  # 上证指数
+  key_level: 3880
+  caution_zone: [3875, 3880]  # 此区间：仓位减半
+  stop_trading_below: 3875
+  volume_target_trillion: 2.3
+  volume_caution_trillion: 2.0
+
+stock_filter:
+  main_force_net_min: 50000000      # 5000 万
+  main_force_net_preferred: 100000000  # 1 亿（大票）
+  change_pct_min: 0.5
+  change_pct_max: 4.0
+  change_pct_no_chase: 6.0
+  turnover_rate_max: 15.0         # 超过视为妖股风险
+
+timing:
+  checklist_start: "14:25"
+  confirm_start: "14:30"
+  buy_window_start: "14:45"
+  buy_window_end: "14:50"
+
+entry:
+  require_15m_higher_lows_after: "14:00"
+  require_15m_bull_bar: true        # 小阳或下影
+
+exit:
+  target_pct_min: 2.0
+  target_pct_max: 3.0
+  partial_exit_pct: 4.0
+  stop: "max(intraday_low, post_14_00_15m_low)"
+
+position:
+  tactical_sleeve_pct: 30
+  single_stock_max_pct: 15
+  max_names: 2
+
+tdx_queries:
+  main_inflow_moderate: "今日A股主力净流入大于1亿且涨幅0.5%到5%非涨停"
+  main_inflow_rank: "今日A股主力净流入排名前20且涨幅1%到4%"
+
+reject:
+  - index_below_key_level
+  - main_force_net_outflow
+  - inflow_but_price_stagnant  # 金风模式
+  - limit_up_or_near_limit
+  - post_14_00_new_low_on_15m
+  - chip_distribution_top_heavy
+  - st_or_micro_cap
