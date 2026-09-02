@@ -1,0 +1,306 @@
+# AI 科技观察池 — 分层配置文件
+# 用途：统一标的池，对接情绪周期 / 事件埋伏 / 期权 IV / 对手逆向等策略
+# 维护：按需增删；priority=core 为流动性与期权链优先标的，elastic 为高弹性机动仓
+
+version: "1.0"
+updated: "2026-08-13"
+theme: AI 科技
+
+# 产业链分层定义（跨市场通用）
+layers:
+  compute:
+    label: 算力
+    description: GPU、服务器、光模块、交换芯片、IDC
+    strategy_fit: [event_driven, options_iv, order_flow, emotion_dragon]
+  model_platform:
+    label: 模型与平台
+    description: 大模型、云计算、AI 中间件
+    strategy_fit: [event_driven, nlp_news, trend_base]
+  terminal_scenario:
+    label: 终端与场景
+    description: AI 手机/PC、智驾、机器人、AI 应用
+    strategy_fit: [emotion_cycle, event_driven, order_flow]
+  infrastructure:
+    label: 基础设施
+    description: 板块 ETF、指数、对冲工具
+    strategy_fit: [delta_hedge, pcr_monitor, trend_base]
+
+# ---------------------------------------------------------------------------
+# 美股观察池（Longbridge 代码格式：SYMBOL.US）
+# ---------------------------------------------------------------------------
+us:
+  compute:
+    core:
+      - symbol: NVDA.US
+        name: 英伟达
+        role: 算力锚
+        notes: IV 曲面基准；财报/GTC/出口政策敏感；对手持仓风向标
+      - symbol: AMD.US
+        name: 超威半导体
+        role: 算力二梯队
+        notes: 联动 NVDA；财报窗口
+      - symbol: AVGO.US
+        name: 博通
+        role: 定制 AI 芯片
+        notes: 数据中心 ASIC；财报驱动
+      - symbol: ARM.US
+        name: Arm
+        role: AI 终端算力架构
+        notes: 高波动；联动手机/边缘 AI 叙事
+    elastic:
+      - symbol: SMCI.US
+        name: 超微电脑
+        role: AI 服务器
+        notes: 放量=资金分歧；弹性大，机动仓慎用追高
+      - symbol: MRVL.US
+        name: 迈威尔
+        role: 数据中心交换/定制
+        notes: 算力链补涨
+      - symbol: MU.US
+        name: 美光
+        role: HBM/存储
+        notes: 周期+AI 双属性
+
+  model_platform:
+    core:
+      - symbol: MSFT.US
+        name: 微软
+        role: OpenAI 生态 + Azure AI
+        notes: 长期 vol 基准；Copilot 指引
+      - symbol: GOOGL.US
+        name: 谷歌
+        role: Gemini + 云
+        notes: 搜索/云 AI 资本开支
+      - symbol: META.US
+        name: Meta
+        role: 推荐算法 + Llama
+        notes: 广告+AI  capex
+      - symbol: AMZN.US
+        name: 亚马逊
+        role: AWS AI 服务
+        notes: Bedrock/Trainium 叙事
+    elastic:
+      - symbol: PLTR.US
+        name: Palantir
+        role: AI 应用/政府+企业
+        notes: 订单流活跃；情绪标
+      - symbol: SNOW.US
+        name: Snowflake
+        role: 数据+AI 平台
+        notes: 财报波动大
+      - symbol: CRM.US
+        name: Salesforce
+        role: 企业 AI Agent
+        notes: Einstein 相关指引
+
+  terminal_scenario:
+    core:
+      - symbol: AAPL.US
+        name: 苹果
+        role: 端侧 AI / Apple Intelligence
+        notes: 秋季发布会窗口
+      - symbol: TSLA.US
+        name: 特斯拉
+        role: 智驾/FSD 叙事
+        notes: 高 vol；tsll 类对手逆向重点；期权 PCR 敏感
+    elastic:
+      - symbol: ISRG.US
+        name: Intuitive Surgical
+        role: 手术机器人
+        notes: AI+医疗场景
+      - symbol: UBER.US
+        name: Uber
+        role: 自动驾驶运营
+        notes: 题材联动
+
+  infrastructure:
+    core:
+      - symbol: SOXX.US
+        name: 半导体 ETF (iShares)
+        role: 半导体 beta
+        notes: Delta 对冲；板块温度计
+      - symbol: QQQ.US
+        name: 纳指100 ETF
+        role: 科技大盘 beta
+        notes: PCR/IV 观测
+      - symbol: SMH.US
+        name: 半导体 ETF (VanEck)
+        role: 纯半导体暴露
+        notes: 算力链整体风向
+    hedge:
+      - symbol: SQQQ.US
+        name: 纳指3x反向
+        role: 短周期对冲
+        notes: 机动仓退潮工具；不宜长持
+
+# ---------------------------------------------------------------------------
+# A 股观察池（Longbridge / 通达信格式：CODE.SH / CODE.SZ）
+# ---------------------------------------------------------------------------
+cn:
+  compute:
+    core:
+      - symbol: 300308.SZ
+        name: 中际旭创
+        role: CPO/光模块龙头
+        notes: 算力链情绪风向标；龙头溢价
+      - symbol: 300502.SZ
+        name: 新易盛
+        role: 光模块
+        notes: 联动中际；分化期看强弱
+      - symbol: 300394.SZ
+        name: 天孚通信
+        role: 光器件
+        notes: 板块梯队中继
+      - symbol: 688256.SH
+        name: 寒武纪
+        role: AI 芯片
+        notes: 高弹性；情绪周期敏感
+      - symbol: 688041.SH
+        name: 海光信息
+        role: 国产算力
+        notes: 政策+算力自主
+      - symbol: 603019.SH
+        name: 中科曙光
+        role: AI 服务器
+        notes: 算力基建
+    elastic:
+      - symbol: 002281.SZ
+        name: 光迅科技
+        role: 光通信
+        notes: 补涨层
+      - symbol: 000977.SZ
+        name: 浪潮信息
+        role: 服务器
+        notes: 算力需求景气
+      - symbol: 688498.SH
+        name: 源杰科技
+        role: 光芯片
+        notes: 细分弹性
+
+  model_platform:
+    core:
+      - symbol: 002230.SZ
+        name: 科大讯飞
+        role: 语音+大模型
+        notes: 国产大模型代表
+      - symbol: 688111.SH
+        name: 金山办公
+        role: WPS AI
+        notes: AI 应用落地
+      - symbol: 300418.SZ
+        name: 昆仑万维
+        role: 天工大模型
+        notes: 情绪题材活跃
+    elastic:
+      - symbol: 688787.SH
+        name: 海天瑞声
+        role: AI 数据
+        notes: 小市值高波动
+
+  terminal_scenario:
+    core:
+      - symbol: 002920.SZ
+        name: 德赛西威
+        role: 智驾域控
+        notes: 汽车 AI 龙头
+      - symbol: 601138.SH
+        name: 工业富联
+        role: AI 服务器代工
+        notes: 算力+制造 crossover
+    elastic:
+      - symbol: 300124.SZ
+        name: 汇川技术
+        role: 工控+机器人
+        notes: 机器人题材联动
+      - symbol: 688169.SH
+        name: 石头科技
+        role: 扫地机器人+AI
+        notes: 消费电子 AI
+
+  infrastructure:
+    core:
+      - symbol: 512760.SH
+        name: 芯片 ETF
+        role: 半导体 beta
+        notes: 板块温度计
+      - symbol: 515070.SH
+        name: 人工智能 ETF
+        role: AI 主题 beta
+        notes: 情绪周期整体观测
+      - symbol: 588000.SH
+        name: 科创50 ETF
+        role: 硬科技 beta
+        notes: 算力+芯片集中
+
+# ---------------------------------------------------------------------------
+# 事件与 NLP（基本面事件埋伏模块引用）
+# ---------------------------------------------------------------------------
+event_keywords:
+  cn:
+    - 算力
+    - 大模型
+    - 人工智能+
+    - CPO
+    - 光模块
+    - 智驾
+    - 机器人
+    - 国产替代
+  us:
+    - AI capex
+    - data center
+    - inference
+    - GPU
+    - export control
+    - Blackwell
+    - Copilot
+    - FSD
+
+# 关键事件类型（日历模块可对接）
+event_types:
+  - id: earnings
+    label: 财报
+    lead_days: 5
+  - id: policy
+    label: 政策/监管
+    lead_days: 3
+  - id: product_launch
+    label: 产品发布
+    lead_days: 7
+  - id: fund_disclosure
+    label: 基金持仓披露
+    lead_days: 2
+    notes: Wood/Barron 等；对手逆向重点
+
+# 对手逆向跟踪（帖子→公告 24–48h 回溯）
+competitor_signals:
+  focus_symbols: [NVDA.US, TSLA.US, SMCI.US, AMD.US, QQQ.US, SOXX.US]
+  categories:
+    - id: event_ambush
+      label: 事件埋伏
+    - id: momentum
+      label: 动量追价
+    - id: vol_bet
+      label: vol 赌财报
+
+# 策略 → 默认观察层级映射
+strategy_defaults:
+  emotion_cycle:
+    markets: [cn]
+    layers: [compute, terminal_scenario]
+    priority: [core]
+  event_driven:
+    markets: [us, cn]
+    layers: [compute, model_platform]
+    priority: [core]
+  options_iv:
+    markets: [us]
+    layers: [compute, infrastructure]
+    priority: [core]
+  order_flow:
+    markets: [us]
+    layers: [compute, terminal_scenario]
+    priority: [core, elastic]
+  trend_base:
+    markets: [us, cn]
+    layers: [model_platform, infrastructure]
+    priority: [core]
