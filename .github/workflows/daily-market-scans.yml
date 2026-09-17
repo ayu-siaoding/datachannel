@@ -1,0 +1,42 @@
+name: Daily market scans
+
+on:
+  schedule:
+    # US cash open ~ 09:35 ET (13:35 UTC during EDT)
+    - cron: "35 13 * * 1-5"
+    # After US close ~ 21:05 UTC
+    - cron: "5 21 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  gex-and-options:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pandas yfinance
+
+      - name: Run GEX heatmap
+        run: python3 scripts/gex_heatmap_daily.py --json
+
+      - name: Run options unusual scan
+        run: python3 scripts/options_unusual_daily.py --json
+
+      - name: Commit alerts if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/alerts/
+          if git diff --staged --quiet; then
+            echo "No alert changes."
+          else
+            git commit -m "chore(alerts): daily GEX heatmap and options unusual scan"
+            git push
+          fi
