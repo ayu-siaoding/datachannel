@@ -246,6 +246,97 @@ def format_markdown(
     return "\n".join(lines)
 
 
+def _cell_color(gex_k: float, vmax: float) -> str:
+    if vmax <= 0 or gex_k != gex_k:
+        return "#1a1a2e"
+    t = min(abs(gex_k) / vmax, 1.0)
+    if gex_k >= 0:
+        # yellow / orange positive
+        r = int(40 + 215 * t)
+        g = int(30 + 170 * t)
+        b = int(20 + 40 * t)
+    else:
+        # purple negative
+        r = int(30 + 120 * t)
+        g = int(20 + 30 * t)
+        b = int(60 + 180 * t)
+    return f"rgb({r},{g},{b})"
+
+
+def format_html_heatmap(
+    symbol: str,
+    spot: float,
+    grid: pd.DataFrame,
+    expirations: list[str],
+    generated_at: str,
+) -> str:
+    exps = [e for e in expirations if e in set(grid["expiration"])][:6]
+    strikes = pick_strike_rows(grid, spot)
+    today = datetime.now(timezone.utc)
+    pivot = grid.pivot_table(index="strike", columns="expiration", values="gex_k", aggfunc="sum")
+    spot_strike = min(strikes, key=lambda s: abs(s - spot))
+
+    vals: list[float] = []
+    for strike in strikes:
+        for exp in exps:
+            if strike in pivot.index and exp in pivot.columns:
+                v = pivot.loc[strike, exp]
+                if not pd.isna(v):
+                    vals.append(abs(float(v)))
+    vmax = max(vals) if vals else 1.0
+
+    head = "".join(f"<th>{dte_label(e, today)}</th>" for e in exps)
+    body_rows: list[str] = []
+    for strike in strikes:
+        is_spot = abs(strike - spot_strike) < 0.01
+        cells = [f'<td class="strike{" spot" if is_spot else ""}">{strike:.0f}</td>']
+        for exp in exps:
+            val = pivot.loc[strike, exp] if strike in pivot.index and exp in pivot.columns else float("nan")
+            if pd.isna(val):
+                cells.append('<td class="empty">—</td>')
+            else:
+                gex_k = float(val)
+                bg = _cell_color(gex_k, vmax)
+                fg = "#111" if gex_k >= 0 and abs(gex_k) / vmax > 0.55 else "#eee"
+                cells.append(
+                    f'<td style="background:{bg};color:{fg}">{format_cell(gex_k)}</td>'
+                )
+        body_rows.append("<tr>" + "".join(cells) + "</tr>")
+
+    return f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Dealer GEX · {symbol} · {generated_at}</title>
+  <style>
+    body {{ font-family: system-ui, sans-serif; background: #0f0f14; color: #e8e8e8; margin: 12px; }}
+    h1 {{ font-size: 1.1rem; margin: 0 0 4px; }}
+    .meta {{ color: #aaa; font-size: 0.85rem; margin-bottom: 12px; }}
+    table {{ border-collapse: collapse; width: 100%; font-size: 0.72rem; }}
+    th, td {{ border: 1px solid #333; padding: 4px 6px; text-align: right; }}
+    th {{ background: #222; position: sticky; top: 0; }}
+    td.strike {{ text-align: center; font-weight: 600; background: #1c1c24; }}
+    td.strike.spot {{ outline: 2px dashed #fff; }}
+    td.empty {{ color: #555; }}
+    .note {{ margin-top: 12px; font-size: 0.8rem; color: #888; }}
+  </style>
+</head>
+<body>
+  <h1>Dealer GEX Heatmap · {symbol}</h1>
+  <div class="meta">Spot ≈ {spot:,.2f} · {generated_at} · Yahoo + BS Gamma（非 Apex 原图）</div>
+  <table>
+    <thead><tr><th>Strike</th>{head}</tr></thead>
+    <tbody>
+      {"".join(body_rows)}
+    </tbody>
+  </table>
+  <p class="note">正 GEX（黄/橙）≈ 钝化/磁吸；负 GEX（紫）≈ 易加速。与付费终端数值会有偏差。</p>
+</body>
+</html>
+"""
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--symbol", default=DEFAULT_SYMBOL, help="Yahoo ticker (^SPX or SPY)")
@@ -255,19 +346,29 @@ def main() -> None:
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    date_slug = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    now = datetime.now(timezone.utc)
+    generated_at = now.strftime("%Y-%m-%d %H:%M UTC")
+    date_slug = now.strftime("%Y-%m-%d")
+    time_slug = now.strftime("%H%M")
     sym_slug = args.symbol.replace("^", "").lower()
 
     print(f"GEX scan {args.symbol}...", flush=True)
     spot, grid, expirations = build_gex_grid(args.symbol, args.max_expiries, args.strike_pct)
 
     args.push_dir.mkdir(parents=True, exist_ok=True)
+    # 当日汇总（覆盖更新）
     md_path = args.push_dir / f"gex_heatmap_{sym_slug}_{date_slug}.md"
     csv_path = args.push_dir / f"gex_heatmap_{sym_slug}_{date_slug}.csv"
+    # 每次运行快照（盘前/盘中留档）
+    snap_base = f"gex_heatmap_{sym_slug}_{date_slug}_{time_slug}"
+    html_snap = args.push_dir / f"{snap_base}.html"
+    html_latest = args.push_dir / f"gex_heatmap_{sym_slug}_latest.html"
 
     md = format_markdown(args.symbol, spot, grid, expirations, generated_at)
+    html = format_html_heatmap(args.symbol, spot, grid, expirations, generated_at)
     md_path.write_text(md, encoding="utf-8")
+    html_snap.write_text(html, encoding="utf-8")
+    html_latest.write_text(html, encoding="utf-8")
     grid.sort_values(["expiration", "strike"]).to_csv(csv_path, index=False)
 
     if args.json:
@@ -279,10 +380,15 @@ def main() -> None:
         }
         json_path = args.push_dir / f"gex_heatmap_{sym_slug}_{date_slug}.json"
         json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        (args.push_dir / f"{snap_base}.json").write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
         print(f"[written] {json_path}")
 
     print(md)
-    print(f"\n[written] {md_path}\n[written] {csv_path}")
+    print(
+        f"\n[written] {md_path}\n[written] {csv_path}\n[written] {html_snap}\n[written] {html_latest}"
+    )
 
 
 if __name__ == "__main__":

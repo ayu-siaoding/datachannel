@@ -1,72 +1,96 @@
 # 每日市场扫描（GEX + 期权异动）
 
-## GEX 热力图（对标 APP「Dealer GEX Heatmap」）
+## 朋友发的那张「Dealer GEX Heatmap」从哪来？
+
+截图里带 **GEX / VEX、Ask APEX、SPX 行权×到期彩色格** 的，多半是付费终端，例如 **Apex Trader**、SpotGamma、Tier1Alpha 等（需订阅，**没有** 稳定免费网页）。
+
+**你不必再让朋友代发。** 本仓库用 Yahoo `^SPX` 期权链 + 自算 Gamma，**自动生成同款结构**：
+
+| 你要看的 | 文件 |
+|----------|------|
+| **最新一屏（像 APP 热力图）** | [`gex_heatmap_spx_latest.html`](gex_heatmap_spx_latest.html) — 浏览器打开 |
+| 当天文字版 | `gex_heatmap_spx_YYYY-MM-DD.md` |
+| 每次快照（盘前/盘中） | `gex_heatmap_spx_YYYY-MM-DD_HHMM.html` |
+| 表格数据 | `gex_heatmap_spx_YYYY-MM-DD.csv` |
+
+GitHub 上路径：`scripts/alerts/gex_heatmap_spx_latest.html`（合并 PR 并 **开启 Actions** 后会自动更新）。
+
+数值与 Apex **不会 1:1**（延迟 OI/IV、Dealer 模型不同），**看档位与正负结构**即可。
+
+---
+
+## GEX 热力图（手动）
 
 ```bash
 python3 scripts/gex_heatmap_daily.py
-python3 scripts/gex_heatmap_daily.py --symbol SPY   # 用 SPY 链（更稳）
-python3 scripts/gex_heatmap_daily.py --json
+# 或
+./scripts/run_gex_heatmap.sh
 ```
 
-输出（默认标的 `^SPX`）：
+可选：`--symbol SPY`（SPY 链有时更稳）、`--json`。
 
-- `gex_heatmap_spx_YYYY-MM-DD.md` — 行权价 × 到期日表格 + 关键档位
-- `gex_heatmap_spx_YYYY-MM-DD.csv` — 全量网格（可自己画热力图）
-- 可选 `gex_heatmap_spx_YYYY-MM-DD.json`
+---
 
-数据：Yahoo 期权链 + Black–Scholes Gamma（**延迟**，与 Apex/SpotGamma **数值不会 1:1**）。
-
-## 期权大单异动日报
+## 期权大单异动
 
 ```bash
 python3 scripts/options_unusual_daily.py
 ```
 
-输出：
+- `options_unusual_YYYY-MM-DD.md` / `.txt`
 
-- `options_unusual_YYYY-MM-DD.md` — 完整列表
-- `options_unusual_YYYY-MM-DD.txt` — 推送样式纯文本（与券商「期权异动」格式接近）
+---
 
-## 每日自动跑
+## 每天自动跑（不用找朋友）
 
-### GitHub Actions（推荐）
+### 1. GitHub Actions（推荐，已配置）
 
-仓库已配置 `.github/workflows/daily-market-scans.yml`：
+文件：`.github/workflows/daily-market-scans.yml`
 
-- **美东开盘 ~09:35**（UTC 13:35，夏令时）→ GEX + 期权异动
-- **美股收盘后**（UTC 21:05）→ 再跑一轮
+**工作日（美东，夏令时近似）自动跑 GEX：**
 
-需在仓库 **Settings → Actions** 启用 workflow；结果 **commit 到 `scripts/alerts/`**。
+| UTC | 美东约 | 说明 |
+|-----|--------|------|
+| 12:30 | 08:30 | 盘前 |
+| 13:35 | 09:35 | 开盘后 |
+| 16:00 | 12:00 | 午间 |
+| 18:00 | 14:00 | 午后 |
+| 20:00 | 16:00 | 尾盘前 |
+| 21:05 | 17:05 | 收盘后 + **期权异动** |
 
-### 本机 cron
+**你需要做的一次性设置：**
 
-开盘看 GEX（UTC 13:35）：
+1. 合并本仓库 PR 到 `main`
+2. GitHub 仓库 → **Settings → Actions → General** → 允许 Actions
+3. 每天打开 **`scripts/alerts/gex_heatmap_spx_latest.html`**（或手机 GitHub 看 md）
+
+冬令时若差 1 小时，可在 workflow 里把 UTC 各减 1。
+
+### 2. 本机 cron（与 Actions 二选一）
 
 ```cron
-35 13 * * 1-5 cd /path/to/datachannel && /usr/bin/python3 scripts/gex_heatmap_daily.py --json >> scripts/alerts/cron.log 2>&1
+30 12 * * 1-5 cd /path/to/datachannel && ./scripts/run_gex_heatmap.sh >> scripts/alerts/cron.log 2>&1
+35 13 * * 1-5 cd /path/to/datachannel && ./scripts/run_gex_heatmap.sh >> scripts/alerts/cron.log 2>&1
+0 16,18,20 * * 1-5 cd /path/to/datachannel && ./scripts/run_gex_heatmap.sh >> scripts/alerts/cron.log 2>&1
+5 21 * * 1-5 cd /path/to/datachannel && python3 scripts/options_unusual_daily.py >> scripts/alerts/cron.log 2>&1
 ```
 
-收盘后期权异动（UTC 21:05）：
+### 3. Cursor Automation / Cloud Agent
 
-```cron
-5 21 * * 1-5 cd /path/to/datachannel && /usr/bin/python3 scripts/options_unusual_daily.py >> scripts/alerts/cron.log 2>&1
-```
+新建 **定时 Automation**（工作日），指令示例：
 
-## 自定义监控列表
+> 运行 `python3 scripts/gex_heatmap_daily.py --json`，告诉我 `gex_heatmap_spx_latest.html` 是否已更新，并摘要 Spot、最大正/负 GEX 行权。
 
-编辑 `scripts/options_unusual_daily.py` 内 `WATCH` 字典：`标的代码: (中文名, 最低成交量张数)`。
+收盘后再加一条跑 `options_unusual_daily.py`。
+
+---
+
+## 自定义
+
+- 期权监控列表：编辑 `scripts/options_unusual_daily.py` 内 `WATCH`
+- GEX 行权范围：编辑 `gex_heatmap_daily.py` 内 `MAX_STRIKE_PCT`
 
 ## 数据说明
 
-- 来源：Yahoo Finance，**延迟**；与券商 Level2 / 期权流 **不完全一致**。
-- 「主动买入/卖出」由 **成交价相对 bid/ask 中间价** 推断，非交易所 aggressor 标记。
-- 已过滤：深度价外/价内（|K-S|/S > 22%）、IV 异常、成交额 < 5 万美元。
-
-## 在 Cursor Cloud Agent 里「每天发我」
-
-对 Agent 说：
-
-- **「跑 `gex_heatmap_daily.py`，贴今日 SPX GEX md」**
-- **「跑 `options_unusual_daily.py`，贴 txt」**
-
-或使用 **定时 Automation** 绑定同一仓库与上述脚本。
+- Yahoo Finance，**延迟**；主动买卖为 bid/ask 推断。
+- GEX 公式见 `gex_heatmap_daily.py` 文件头注释。

@@ -2,14 +2,22 @@ name: Daily market scans
 
 on:
   schedule:
-    # US cash open ~ 09:35 ET (13:35 UTC during EDT)
+    # 美东 08:30 盘前
+    - cron: "30 12 * * 1-5"
+    # 美东 09:35 开盘后
     - cron: "35 13 * * 1-5"
-    # After US close ~ 21:05 UTC
+    # 美东 12:00 午间
+    - cron: "0 16 * * 1-5"
+    # 美东 14:00 午后
+    - cron: "0 18 * * 1-5"
+    # 美东 16:00 尾盘前
+    - cron: "0 20 * * 1-5"
+    # 美东 ~17:05 收盘后（GEX + 期权异动）
     - cron: "5 21 * * 1-5"
   workflow_dispatch:
 
 jobs:
-  gex-and-options:
+  gex-heatmap:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,20 +31,47 @@ jobs:
       - name: Install dependencies
         run: pip install pandas yfinance
 
-      - name: Run GEX heatmap
+      - name: Run GEX heatmap (SPX)
         run: python3 scripts/gex_heatmap_daily.py --json
+
+      - name: Commit GEX alerts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/alerts/gex_heatmap_*
+          if git diff --staged --quiet; then
+            echo "No GEX changes."
+          else
+            git commit -m "chore(alerts): GEX heatmap snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
+
+  options-unusual:
+    if: github.event.schedule == '5 21 * * 1-5' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pandas yfinance
 
       - name: Run options unusual scan
         run: python3 scripts/options_unusual_daily.py --json
 
-      - name: Commit alerts if changed
+      - name: Commit options alerts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/alerts/
+          git add scripts/alerts/options_unusual_*
           if git diff --staged --quiet; then
-            echo "No alert changes."
+            echo "No options changes."
           else
-            git commit -m "chore(alerts): daily GEX heatmap and options unusual scan"
+            git commit -m "chore(alerts): options unusual daily $(date -u +%Y-%m-%d)"
             git push
           fi
