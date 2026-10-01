@@ -34,11 +34,14 @@ jobs:
       - name: Run GEX heatmap (SPX)
         run: python3 scripts/gex_heatmap_daily.py --json
 
+      - name: Run SPX/SPY daily level chains
+        run: python3 scripts/spx_spy_levels_daily.py --json
+
       - name: Commit GEX alerts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/alerts/gex_heatmap_*
+          git add scripts/alerts/gex_heatmap_* scripts/alerts/spx_spy_levels_*
           if git diff --staged --quiet; then
             echo "No GEX changes."
           else
