@@ -41,6 +41,24 @@ python3 scripts/options_unusual_daily.py
 
 ---
 
+## 娜娜结构日更简报（宏观 + 指数 + SOX + Mag7 + 硬件）
+
+对齐 [娜娜话美股](https://youtu.be/khnPevsQ_TE) 类日更：**三大指数、美债/油/VIX、标普 K 线形状、SOX 12400–12600 带、板块 ETF vs SPY、Mag7、MU/STX/NVDA 等硬件表**，并引用 `spx_spy_levels_latest.txt` 的 GEX 一行摘要。
+
+```bash
+python3 scripts/spx_spy_levels_daily.py --json   # 建议先跑（GEX 档位）
+python3 scripts/nana_market_brief_daily.py --json
+```
+
+| 文件 | 说明 |
+|------|------|
+| **`nana_market_brief_latest.md`** | 最新一版 Markdown |
+| `nana_market_brief_YYYY-MM-DD.json` | 结构化数据（Automation / 下游用） |
+
+**GitHub Actions**：美东收盘后 job（UTC 21:05）与期权异动一并自动跑并提交。
+
+---
+
 ## 每天自动跑（不用找朋友）
 
 ### 1. GitHub Actions（推荐，已配置）

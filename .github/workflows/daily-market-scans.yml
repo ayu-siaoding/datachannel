@@ -67,14 +67,20 @@ jobs:
       - name: Run options unusual scan
         run: python3 scripts/options_unusual_daily.py --json
 
+      - name: Run SPX/SPY levels (GEX snippet for brief)
+        run: python3 scripts/spx_spy_levels_daily.py --json
+
+      - name: Run Nana-style market brief
+        run: python3 scripts/nana_market_brief_daily.py --json
+
       - name: Commit options alerts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/alerts/options_unusual_*
+          git add scripts/alerts/options_unusual_* scripts/alerts/nana_market_brief_*
           if git diff --staged --quiet; then
-            echo "No options changes."
+            echo "No options/brief changes."
           else
-            git commit -m "chore(alerts): options unusual daily $(date -u +%Y-%m-%d)"
+            git commit -m "chore(alerts): daily close brief + options $(date -u +%Y-%m-%d)"
             git push
           fi
