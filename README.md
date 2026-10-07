@@ -9,6 +9,11 @@ a few tools
 
 ```bash
 pip install yfinance pandas numpy
+# 每日开盘：板块资金 + 个股机会（美股）
+python3 tools/daily_open_flow_and_picks.py
+python3 tools/daily_open_flow_and_picks.py --save reports/daily_us.md
+# 三层联合筛选
 python3 tools/us_triple_layer_screen.py
-python3 tools/us_triple_layer_screen.py --json
 ```
+
+流程说明：[docs/DAILY_OPEN_WORKFLOW.md](docs/DAILY_OPEN_WORKFLOW.md)

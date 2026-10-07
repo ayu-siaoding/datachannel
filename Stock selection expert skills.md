@@ -25,7 +25,9 @@
 2. **蔡森**：在 90～120 日 K 线上找 **颈线** 与 **破底翻/假突破** → 无假突破且放量突破才进入候选。
 3. **永泉**：适应率、PEG、增速 → **道士趋势 + MA21/55（江恩）+ RSI 辅助 + 分批 + 1:2 止损目标**。
 
-自动化脚本（研究用）：`python3 tools/us_triple_layer_screen.py`（Yahoo 行情，非投资建议）。
+自动化脚本（研究用）：
+- **每日开盘**：`python3 tools/daily_open_flow_and_picks.py`（板块 ETF 资金热度 → 板块内三层选股），见 [docs/DAILY_OPEN_WORKFLOW.md](docs/DAILY_OPEN_WORKFLOW.md)
+- **三层筛选**：`python3 tools/us_triple_layer_screen.py`（Yahoo 行情，非投资建议）
 
 ## 四、操作要点
 - **快速适应率筛选**：先挑出行业平均区间内的股票，再结合PEG判断估值合理性。
