@@ -67,14 +67,19 @@ jobs:
       - name: Run options unusual scan
         run: python3 scripts/options_unusual_daily.py --json
 
+      - name: Light comm dual scan + 究公司
+        run: |
+          python3 scripts/screen_light_comm_dual.py --json
+          python3 scripts/screen_us_tonight.py --json || true
+
       - name: Commit options alerts
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add scripts/alerts/options_unusual_*
+          git add scripts/alerts/options_unusual_* scripts/alerts/light_comm_dual_* scripts/alerts/jiu_company_* scripts/alerts/screen_us_tonight_*
           if git diff --staged --quiet; then
-            echo "No options changes."
+            echo "No close-scan changes."
           else
-            git commit -m "chore(alerts): options unusual daily $(date -u +%Y-%m-%d)"
+            git commit -m "chore(alerts): close scans + 究公司 $(date -u +%Y-%m-%d)"
             git push
           fi

@@ -85,6 +85,24 @@ python3 scripts/options_unusual_daily.py
 
 ---
 
+## 光通讯（美+A）+ 究公司 + 今晚可买
+
+```bash
+python3 scripts/screen_light_comm_dual.py --json   # 技术面（会自动跑究公司）
+python3 scripts/jiu_company_daily.py --from-scan   # 仅基本面
+python3 scripts/screen_us_tonight.py               # 更广美股池
+```
+
+| 文件 | 说明 |
+|------|------|
+| `light_comm_dual_latest.md` | 光/RF/存/卫星 · 美+A 技术 |
+| **`jiu_company_latest.md`** | **究公司**：适应率、PEG、六维③④⑤代理分 |
+| `screen_us_tonight_latest.md` | 今晚美股可挂限价 |
+
+UTC **21:05** 收盘 job 会一并提交（需 Actions 开启）。
+
+---
+
 ## 自定义
 
 - 期权监控列表：编辑 `scripts/options_unusual_daily.py` 内 `WATCH`
