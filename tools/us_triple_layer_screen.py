@@ -13,6 +13,15 @@ import pandas as pd
 import yfinance as yf
 
 
+def _float_or_none(val: Any) -> float | None:
+    if val is None:
+        return None
+    try:
+        return float(val)
+    except (TypeError, ValueError):
+        return None
+
+
 DEFAULT_TICKERS = [
     "AAPL", "MSFT", "GOOGL", "AMZN", "META", "NVDA", "AMD", "AVGO", "QCOM", "TSM",
     "CRM", "ORCL", "ADBE", "NFLX", "COST", "WMT", "JPM", "V", "MA", "LLY",
@@ -96,8 +105,8 @@ def pendulum_layer(hist: pd.DataFrame, info: dict[str, Any]) -> PendulumResult:
         zone, posture, cap = "neutral", "neutral", 25.0
         note = "钟摆中性区：按结构正常分批"
 
-    pe = info.get("trailingPE")
-    if pe and pe > 45 and pct > 0.8:
+    pe = _float_or_none(info.get("trailingPE"))
+    if pe is not None and pe > 45 and pct > 0.8:
         cap = min(cap, 12.0)
         note += "；估值+价位双偏高"
 
@@ -189,8 +198,8 @@ def yongquan_layer(hist: pd.DataFrame, info: dict[str, Any]) -> YongquanResult:
     loss = (-delta.clip(upper=0)).rolling(14).mean()
     rsi = float((100 - (100 / (1 + gain.iloc[-1] / loss.iloc[-1]))))
 
-    pe = info.get("trailingPE")
-    peg = info.get("pegRatio")
+    pe = _float_or_none(info.get("trailingPE"))
+    peg = _float_or_none(info.get("pegRatio"))
     rev_g = info.get("revenueGrowth")
     earn_g = info.get("earningsGrowth")
     growth_ok = (rev_g is not None and rev_g >= 0.08) or (earn_g is not None and earn_g >= 0.10)

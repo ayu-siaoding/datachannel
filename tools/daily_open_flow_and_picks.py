@@ -2,12 +2,13 @@
 """
 每日开盘：资金偏向哪些板块 + 板块内哪些个股更有机会涨。
 
-美股：Yahoo 行业 ETF 相对强度 + 量能 + 钟摆/蔡森/永泉三层（复用 us_triple_layer_screen）。
-A股：请配合 Cursor 里 tdx_wenda_quotes（见 docs/DAILY_OPEN_WORKFLOW.md）。
+- 美股：Yahoo 行业 ETF + 钟摆/蔡森/永泉
+- A股：行业龙头池 yfinance + 同一套三层（基准 510300）
+- both：合并一份报告
 
 用法:
-  python3 tools/daily_open_flow_and_picks.py
-  python3 tools/daily_open_flow_and_picks.py --market us --save reports/daily_us.md
+  python3 tools/daily_open_flow_and_picks.py --market both
+  python3 tools/daily_open_flow_and_picks.py --market cn --save reports/daily_cn.md
 """
 from __future__ import annotations
 
@@ -23,6 +24,7 @@ _TOOLS = Path(__file__).resolve().parent
 if str(_TOOLS) not in sys.path:
     sys.path.insert(0, str(_TOOLS))
 
+from cn_open_market import cn_market_pendulum, rank_cn_sectors, scan_cn_picks
 from us_triple_layer_screen import market_pendulum, screen_symbol
 
 US_SECTORS: dict[str, dict[str, object]] = {
@@ -49,7 +51,6 @@ def _etf_flow_score(etf: str, spy_ret1: float, spy_ret5: float) -> dict | None:
     vol_ratio = float(vol.iloc[-1] / vol.iloc[-21:-1].mean()) if vol.iloc[-21:-1].mean() else 1.0
     rs1 = ret1 - spy_ret1
     rs5 = ret5 - spy_ret5
-    # 资金偏好：相对 SPY 强 + 放量
     heat = rs5 * 100 + rs1 * 50 + (vol_ratio - 1) * 8
     return {
         "etf": etf,
@@ -90,7 +91,7 @@ def _stock_opportunity_score(row, sector_rank: int) -> float:
         base += 3
     if row.caisen.false_breakout:
         base -= 15
-    base += max(0, 4 - sector_rank)  # 最热板块加分
+    base += max(0, 4 - sector_rank)
     return base
 
 
@@ -130,86 +131,150 @@ def scan_us_picks(sector_rows: list[dict], max_per_sector: int = 4) -> list[dict
     return picks
 
 
-def format_report(sector_rows: list[dict], picks: list[dict], spy_ret1: float, spy_ret5: float) -> str:
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-    mkt = market_pendulum()
+def _section_market(
+    title: str,
+    pendulum,
+    bench_label: str,
+    bench_ret1: float,
+    bench_ret5: float,
+    sector_rows: list[dict],
+    picks: list[dict],
+    sector_table_header: str,
+) -> list[str]:
     lines = [
-        f"# 每日开盘报告（美股） {now}",
+        f"## {title}",
+        f"- 钟摆：一年分位 **{pendulum.price_percentile_1y:.0%}** → {pendulum.zone} / {pendulum.posture}",
+        f"- {pendulum.note}",
+        f"- {bench_label} 近1日 {bench_ret1*100:.2f}% | 近5日 {bench_ret5*100:.2f}%",
         "",
-        "> 研究用途，非投资建议。A 股请见 docs/DAILY_OPEN_WORKFLOW.md 中 tdx 步骤。",
-        "",
-        "## 1. 大盘钟摆（SPY）",
-        f"- 一年价位分位：**{mkt.price_percentile_1y:.0%}** → {mkt.zone} / {mkt.posture}",
-        f"- {mkt.note}",
-        f"- SPY 近1日 {spy_ret1*100:.2f}% | 近5日 {spy_ret5*100:.2f}%",
-        "",
-        "## 2. 开盘资金偏向板块（ETF 相对强度 + 量能）",
-        "| 排名 | 板块 | ETF | 近5日% | 相对SPY(5日) | 量比 | 热度 |",
-        "|------|------|-----|--------|--------------|------|------|",
+        sector_table_header,
     ]
     for i, s in enumerate(sector_rows, 1):
-        lines.append(
-            f"| {i} | {s['sector']} | {s['etf']} | {s['ret5_pct']} | {s['rs5_pct']} | {s['vol_ratio']} | {s['heat']} |"
-        )
-    lines.extend(["", "## 3. 板块内有机会个股（钟摆+蔡森+永泉）", ""])
+        if "etf" in s:
+            lines.append(
+                f"| {i} | {s['sector']} | {s['etf']} | {s['ret5_pct']} | {s['rs5_pct']} | {s['vol_ratio']} | {s['heat']} |"
+            )
+        else:
+            lines.append(
+                f"| {i} | {s['sector']} | {s['sample']} | {s['ret5_pct']} | {s['rs5_pct']} | {s['vol_ratio']} | {s['heat']} |"
+            )
+    lines.extend(["", "### 板块内个股机会", ""])
     lines.append("| 机会分 | 板块 | 代码 | 结论 | 永泉分 | 蔡森信号 | 止损参考 |")
     lines.append("|--------|------|------|------|--------|----------|----------|")
-    for p in picks[:20]:
+    for p in picks[:15]:
         sig = "；".join(p["caisen"][:2]) if p["caisen"] else "-"
         lines.append(
             f"| {p['opportunity_score']} | {p['sector']} | {p['symbol']} | {p['overall']} | "
             f"{p['yongquan_score']} | {sig} | {p['stop']} |"
         )
-    lines.extend(
-        [
-            "",
-            "## 4. 今日怎么用",
-            "1. **先看第 1 节**：钟摆贪婪 → 总仓打折；恐惧 → 可略积极。",
-            "2. **第 2 节定板块**：只做热度前 3 板块，避免冷门逆资金。",
-            "3. **第 3 节定个股**：优先「可分批买入」；「观察」等蔡森放量；「剔除/观望」不做。",
-            "4. **开盘 30 分钟**：价不破前低 + 板块 ETF 仍强于 SPY 再下首批。",
-        ]
+    return lines
+
+
+def format_report_us(sector_rows, picks, spy_ret1, spy_ret5) -> str:
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    mkt = market_pendulum()
+    lines = [f"# 每日开盘报告（美股） {now}", "", "> 研究用途，非投资建议。", ""]
+    lines += _section_market(
+        "1. 大盘与板块（美股）",
+        mkt,
+        "SPY",
+        spy_ret1,
+        spy_ret5,
+        sector_rows,
+        picks,
+        "| 排名 | 板块 | ETF | 近5日% | 相对基准(5日) | 量比 | 热度 |\n|------|------|-----|--------|--------------|------|------|",
     )
+    lines += ["", "### 操作提示", "- 钟摆贪婪→小仓；只做热度前3板块；蔡森放量再首批。", ""]
+    return "\n".join(lines)
+
+
+def format_report_cn(sector_rows, picks, b1, b5) -> str:
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    mkt = cn_market_pendulum()
+    lines = [f"# 每日开盘报告（A股） {now}", "", "> 研究用途，非投资建议。主力净额可再用 tdx 交叉验证。", ""]
+    lines += _section_market(
+        "1. 大盘与板块（A股）",
+        mkt,
+        "510300",
+        b1,
+        b5,
+        sector_rows,
+        picks,
+        "| 排名 | 板块 | 样本数 | 近5日% | 相对沪深300(5日) | 量比 | 热度 |\n|------|------|--------|--------|------------------|------|------|",
+    )
+    lines += [
+        "",
+        "### 操作提示",
+        "- A股开盘 9:25 后看板块是否延续；政策主线优先（见 A股与美股投资逻辑对比笔记）。",
+        "- Agent 可追加 tdx：`通达信行业板块涨幅排名前十` + `主力净流入排名前十`。",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def format_report_both(us_s, us_p, us_r1, us_r5, cn_s, cn_p, cn_r1, cn_r5) -> str:
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    lines = [
+        f"# 每日开盘报告（A股 + 美股） {now}",
+        "",
+        "> 研究用途，非投资建议。",
+        "",
+        "---",
+        "",
+    ]
+    lines.append(format_report_cn(cn_s, cn_p, cn_r1, cn_r5).split("\n", 3)[-1])
+    lines.append("\n---\n")
+    lines.append(format_report_us(us_s, us_p, us_r1, us_r5).split("\n", 3)[-1])
     return "\n".join(lines)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="每日开盘板块资金与个股机会")
-    parser.add_argument("--market", choices=["us", "cn", "both"], default="us")
+    parser.add_argument("--market", choices=["us", "cn", "both"], default="both")
     parser.add_argument("--top-sectors", type=int, default=5)
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--save", type=str, default="", help="保存 Markdown 路径")
     args = parser.parse_args()
 
+    out_us = out_cn = None
+    us_s = us_p = cn_s = cn_p = None
+    us_r1 = us_r5 = cn_r1 = cn_r5 = 0.0
+
+    if args.market in ("us", "both"):
+        us_s, us_r1, us_r5 = rank_us_sectors(args.top_sectors)
+        us_p = scan_us_picks(us_s)
+        out_us = format_report_us(us_s, us_p, us_r1, us_r5)
+
     if args.market in ("cn", "both"):
-        print("A股：请用 Cursor Agent 调用 tdx `tdx_wenda_quotes`（流程见 docs/DAILY_OPEN_WORKFLOW.md）\n")
-
-    if args.market not in ("us", "both"):
-        return 0
-
-    sectors, spy_ret1, spy_ret5 = rank_us_sectors(args.top_sectors)
-    picks = scan_us_picks(sectors)
+        cn_s, cn_r1, cn_r5 = rank_cn_sectors(args.top_sectors)
+        cn_p = scan_cn_picks(cn_s)
+        out_cn = format_report_cn(cn_s, cn_p, cn_r1, cn_r5)
 
     if args.json:
-        print(
-            json.dumps(
-                {
-                    "market_pendulum": market_pendulum().__dict__,
-                    "sectors": sectors,
-                    "picks": picks,
-                },
-                ensure_ascii=False,
-                indent=2,
-                default=str,
-            )
-        )
+        payload = {}
+        if out_us:
+            payload["us"] = {"sectors": us_s, "picks": us_p, "pendulum": market_pendulum().__dict__}
+        if out_cn:
+            payload["cn"] = {"sectors": cn_s, "picks": cn_p, "pendulum": cn_market_pendulum().__dict__}
+        print(json.dumps(payload, ensure_ascii=False, indent=2, default=str))
     else:
-        print(format_report(sectors, picks, spy_ret1, spy_ret5))
+        if args.market == "both":
+            print(format_report_both(us_s, us_p, us_r1, us_r5, cn_s, cn_p, cn_r1, cn_r5))
+        elif args.market == "us":
+            print(out_us)
+        else:
+            print(out_cn)
 
     if args.save:
         path = Path(args.save)
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(format_report(sectors, picks, spy_ret1, spy_ret5), encoding="utf-8")
+        if args.market == "both":
+            text = format_report_both(us_s, us_p, us_r1, us_r5, cn_s, cn_p, cn_r1, cn_r5)
+        elif args.market == "us":
+            text = out_us or ""
+        else:
+            text = out_cn or ""
+        path.write_text(text, encoding="utf-8")
         print(f"\n已保存: {path}", file=sys.stderr)
 
     return 0
