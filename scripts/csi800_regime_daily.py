@@ -28,24 +28,13 @@ BOX_MID = 4150.0
 BOX_HIGH = 5200.0
 
 
-def fetch_csi800_daily() -> pd.DataFrame:
-    url = (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get?"
-        "secid=1.000906&fields1=f1,f2,f3,f4,f5,f6"
-        "&fields2=f51,f52,f53,f54,f55,f56,f57,f58"
-        "&klt=101&fqt=0&beg=20150101&end=20500101&lmt=10000"
-    )
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    with urllib.request.urlopen(req, timeout=25) as resp:
-        payload = json.loads(resp.read().decode("utf-8", errors="replace"))
-    data = payload.get("data") or {}
-    lines = data.get("klines") or []
-    if not lines:
-        raise RuntimeError("empty CSI800 klines from eastmoney")
+CACHE_CSV = ALERTS / "csi800_daily_cache.csv"
+
+
+def _parse_klines(lines: list) -> pd.DataFrame:
     rows = []
     for ln in lines:
         p = ln.split(",")
-        # date,open,close,high,low,volume,amount,amp
         rows.append(
             {
                 "date": p[0],
@@ -58,6 +47,63 @@ def fetch_csi800_daily() -> pd.DataFrame:
     df = pd.DataFrame(rows)
     df["date"] = pd.to_datetime(df["date"])
     return df.set_index("date").sort_index()
+
+
+def fetch_csi800_sina() -> pd.DataFrame:
+    url = (
+        "https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/"
+        "CN_MarketData.getKLineData?symbol=sh000906&scale=240&ma=no&datalen=1023"
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=25) as resp:
+        data = json.loads(resp.read().decode("utf-8", errors="replace"))
+    if not data:
+        raise RuntimeError("empty CSI800 from sina")
+    rows = [
+        {
+            "date": x["day"],
+            "open": float(x["open"]),
+            "close": float(x["close"]),
+            "high": float(x["high"]),
+            "low": float(x["low"]),
+        }
+        for x in data
+    ]
+    df = pd.DataFrame(rows)
+    df["date"] = pd.to_datetime(df["date"])
+    return df.set_index("date").sort_index()
+
+
+def fetch_csi800_eastmoney() -> pd.DataFrame:
+    url = (
+        "https://push2his.eastmoney.com/api/qt/stock/kline/get?"
+        "secid=1.000906&fields1=f1,f2,f3,f4,f5,f6"
+        "&fields2=f51,f52,f53,f54,f55,f56,f57,f58"
+        "&klt=101&fqt=0&beg=20150101&end=20500101&lmt=10000"
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        payload = json.loads(resp.read().decode("utf-8", errors="replace"))
+    data = payload.get("data") or {}
+    lines = data.get("klines") or []
+    if not lines:
+        raise RuntimeError("empty CSI800 klines from eastmoney")
+    return _parse_klines(lines)
+
+
+def fetch_csi800_daily() -> pd.DataFrame:
+    last_err: Exception | None = None
+    for fetcher in (fetch_csi800_sina, fetch_csi800_eastmoney):
+        try:
+            df = fetcher()
+            ALERTS.mkdir(parents=True, exist_ok=True)
+            df.to_csv(CACHE_CSV)
+            return df
+        except Exception as e:
+            last_err = e
+    if CACHE_CSV.exists():
+        return pd.read_csv(CACHE_CSV, parse_dates=["date"]).set_index("date").sort_index()
+    raise RuntimeError(f"CSI800 fetch failed: {last_err}")
 
 
 def regime_from_closes(c: pd.Series) -> dict:
@@ -137,7 +183,7 @@ def format_md(r: dict, generated_at: str) -> str:
     lines = [
         f"# 中证800 仓位开关",
         f"",
-        f"生成：**{generated_at}** · 数据截至 **{r['asof']}** · 东财日K",
+        f"生成：**{generated_at}** · 数据截至 **{r['asof']}** · 新浪/东财日K",
         f"",
         f"## 一眼结论：**{r['stance']}**",
         f"",
