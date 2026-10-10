@@ -1,0 +1,225 @@
+{
+  "generated_at": "2026-10-07 00:31 UTC",
+  "companies": [
+    {
+      "symbol": "SWKS",
+      "name": "Skyworks Solutions, Inc.",
+      "price": NaN,
+      "sector": "Technology",
+      "market_cap_B": 19.5,
+      "trailing_pe": 42.896374,
+      "forward_pe": 14.989145,
+      "adapt_rate": NaN,
+      "peg_text": "PEG≈11.88（>1.5 偏贵）",
+      "revenue_growth_pct": -3.1,
+      "profit_margin_pct": 7.2,
+      "scores": {
+        "③壁垒(代理)": 3,
+        "④财务(代理)": 3,
+        "⑤趋势(代理)": 2,
+        "proxy_total": 8,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "③射频前端；⑤手机+IoT；④周期与苹果链相关",
+      "summary": "Skyworks Solutions, Inc., together with its subsidiaries, develops, manufactures, and markets analog and mixed-signal semiconductor products and solutions in the United States, Taiwan, China, South Korea, Europe, the Middle East, Africa, and the Asia Pacific. The company offers a…"
+    },
+    {
+      "symbol": "SNDK",
+      "name": "Sandisk Corporation",
+      "price": NaN,
+      "sector": "Technology",
+      "market_cap_B": 243.1,
+      "trailing_pe": 22.511658,
+      "forward_pe": 6.301902,
+      "adapt_rate": NaN,
+      "peg_text": "PEG代理≈0.02（PE/收入增速）",
+      "revenue_growth_pct": 371.6,
+      "profit_margin_pct": 56.5,
+      "scores": {
+        "③壁垒(代理)": 5,
+        "④财务(代理)": 4,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 14,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "",
+      "summary": "Sandisk Corporation develops, manufactures, and sells data storage devices and solutions using NAND flash technology in the Americas, Europe, the Middle East, Africa, Asia, and internationally. The company provides solid state drives for desktop and notebook PCs, gaming consoles,…"
+    },
+    {
+      "symbol": "ASTS",
+      "name": "AST SpaceMobile, Inc.",
+      "price": NaN,
+      "sector": "Technology",
+      "market_cap_B": 24.6,
+      "trailing_pe": null,
+      "forward_pe": -49.056488,
+      "adapt_rate": null,
+      "peg_text": "PEG代理≈-0.02（PE/收入增速）",
+      "revenue_growth_pct": 2626.6,
+      "profit_margin_pct": 0.0,
+      "scores": {
+        "③壁垒(代理)": 2,
+        "④财务(代理)": 2,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 9,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "③频谱+MNO 合作模式；④仍亏损；⑥卫星主题高波动",
+      "summary": "AST SpaceMobile, Inc., together with its subsidiaries, designs and develops the constellation of BlueBird satellites in the United States. The company provides a cellular broadband network in space to be accessible directly by smartphones for commercial use and other applications…"
+    },
+    {
+      "symbol": "IRDM",
+      "name": "Iridium Communications Inc",
+      "price": NaN,
+      "sector": "Communication Services",
+      "market_cap_B": 5.2,
+      "trailing_pe": 55.727276,
+      "forward_pe": 28.594751,
+      "adapt_rate": NaN,
+      "peg_text": "PEG≈1.89（>1.5 偏贵）",
+      "revenue_growth_pct": 3.8,
+      "profit_margin_pct": 10.5,
+      "scores": {
+        "③壁垒(代理)": 3,
+        "④财务(代理)": 3,
+        "⑤趋势(代理)": 3,
+        "proxy_total": 9,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "",
+      "summary": "Iridium Communications Inc. provides mobile voice and data communications services and products to businesses, the United States and foreign governments, non-governmental organizations, and consumers in the United States, Canada, and internationally. The company offers mobile sat…"
+    },
+    {
+      "symbol": "MU",
+      "name": "Micron Technology, Inc.",
+      "price": NaN,
+      "sector": "Technology",
+      "market_cap_B": 1180.8,
+      "trailing_pe": 14.314897,
+      "forward_pe": 5.067357,
+      "adapt_rate": NaN,
+      "peg_text": "PEG≈0.16（≤1 偏合理）",
+      "revenue_growth_pct": 379.3,
+      "profit_margin_pct": 63.8,
+      "scores": {
+        "③壁垒(代理)": 5,
+        "④财务(代理)": 4,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 14,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "⑤存储/HBM景气；⑥周期股波动大，勿深套摊平；③寡占但价格周期明显",
+      "summary": "Micron Technology, Inc. designs, develops, manufactures, and sells memory and storage products in the United States, Taiwan, Japan, Mainland China, Hong Kong, Europe, and internationally. It operates through the Cloud Memory Business Unit; Core Data Center Business Unit; Mobile a…"
+    },
+    {
+      "symbol": "300308.SZ",
+      "name": "ZHONGJI INNOLIGHT",
+      "price": 808.4400024414062,
+      "sector": "Technology",
+      "market_cap_B": 945.7,
+      "trailing_pe": 44.17705,
+      "forward_pe": 12.157769,
+      "adapt_rate": 11.04,
+      "peg_text": "PEG代理≈0.07（PE/收入增速）",
+      "revenue_growth_pct": 174.6,
+      "profit_margin_pct": 31.4,
+      "scores": {
+        "③壁垒(代理)": 5,
+        "④财务(代理)": 4,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 14,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "③光模块；⑤同上；⑥估值常高于二线",
+      "summary": "Zhongji Innolight Co., Ltd. research and development, design, manufacturing, and sales of high-speed optical transceivers in China, United States, Singapore, Netherlands, United Kingdom, and Hong Kong. The company offers products, such as a comprehensive portfolio of optical tran…"
+    },
+    {
+      "symbol": "300502.SZ",
+      "name": "EOPTOLINK",
+      "price": 389.0,
+      "sector": "Technology",
+      "market_cap_B": 542.6,
+      "trailing_pe": 41.427048,
+      "forward_pe": 10.901091,
+      "adapt_rate": 10.36,
+      "peg_text": "PEG代理≈0.11（PE/收入增速）",
+      "revenue_growth_pct": 96.9,
+      "profit_margin_pct": 37.1,
+      "scores": {
+        "③壁垒(代理)": 5,
+        "④财务(代理)": 4,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 14,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "③光模块龙头之一；⑤AI 数据中心光模块；④看毛利率与北美客户占比",
+      "summary": "Eoptolink Technology Inc., Ltd. engages in the research and development, production, and sale of optical modules for optical communication applications in China and internationally. It offers optical interconnect products; and high-speed optical modules, silicon optical modules, …"
+    },
+    {
+      "symbol": "002281.SZ",
+      "name": "ACCELINK",
+      "price": 164.8800048828125,
+      "sector": "Technology",
+      "market_cap_B": 136.5,
+      "trailing_pe": 113.71034,
+      "forward_pe": 47.791306,
+      "adapt_rate": 28.43,
+      "peg_text": "PEG≈1.33（1～1.5 观察）",
+      "revenue_growth_pct": 27.0,
+      "profit_margin_pct": 8.7,
+      "scores": {
+        "③壁垒(代理)": 3,
+        "④财务(代理)": 2,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 10,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "",
+      "summary": "Accelink Technologies Co,Ltd. researches, develops, manufactures, sells, and technical services for optoelectronic chips, devices, modules, and subsystem products in China and internationally. The company offers transmission products, including transmission optical transceiver mo…"
+    },
+    {
+      "symbol": "601869.SS",
+      "name": "YANGTZE OPTICAL FIBRE AND CABLE",
+      "price": 411.1600036621094,
+      "sector": "Technology",
+      "market_cap_B": 337.9,
+      "trailing_pe": 97.20094,
+      "forward_pe": 26.647621,
+      "adapt_rate": 24.3,
+      "peg_text": "PEG代理≈0.35（PE/收入增速）",
+      "revenue_growth_pct": 75.1,
+      "profit_margin_pct": 19.5,
+      "scores": {
+        "③壁垒(代理)": 4,
+        "④财务(代理)": 4,
+        "⑤趋势(代理)": 5,
+        "proxy_total": 13,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "",
+      "summary": "Yangtze Optical Fibre And Cable Joint Stock Limited Company produces and sells optical fiber preforms rods, optical fiber, and optical fiber cables in China and internationally. Itoffers cutting edge products; optical fiber preforms, coating, and silicon tetrachloride; communicat…"
+    },
+    {
+      "symbol": "300394.SZ",
+      "name": "TFC",
+      "price": 260.7699890136719,
+      "sector": "Technology",
+      "market_cap_B": 284.5,
+      "trailing_pe": 122.427216,
+      "forward_pe": 37.094196,
+      "adapt_rate": 30.61,
+      "peg_text": "PEG 缺数据",
+      "revenue_growth_pct": -0.9,
+      "profit_margin_pct": 42.0,
+      "scores": {
+        "③壁垒(代理)": 5,
+        "④财务(代理)": 3,
+        "⑤趋势(代理)": 2,
+        "proxy_total": 10,
+        "note": "①②⑥须人工；代理满分15，≥12 基本面尚可配合技术面"
+      },
+      "curated": "",
+      "summary": "Suzhou TFC Optical Communication Co., Ltd., together with its subsidiaries, provides optical sub-assembly integrated solutions and optoelectronic packaging manufacturing services in Mainland China and internationally. It operates through Optical Device Overall Solutions and Optoe…"
+    }
+  ]
+}
