@@ -112,7 +112,11 @@ def fetch_one(symbol: str) -> dict:
     t = yf.Ticker(symbol)
     info = t.info or {}
     hist = t.history(period="5d", auto_adjust=True)
-    price = float(hist["Close"].iloc[-1]) if not hist.empty else safe_float(info.get("currentPrice"))
+    price = float(hist["Close"].iloc[-1]) if not hist.empty else None
+    if price is None:
+        price = safe_float(
+            info.get("regularMarketPrice") or info.get("currentPrice") or info.get("previousClose")
+        )
     eps = safe_float(info.get("trailingEps"))
     adapt = adapt_rate(price, eps) if price else None
     pe = safe_float(info.get("forwardPE") or info.get("trailingPE"))

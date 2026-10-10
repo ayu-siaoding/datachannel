@@ -14,6 +14,8 @@ on:
     - cron: "0 20 * * 1-5"
     # 美东 ~17:05 收盘后（GEX + 期权异动）
     - cron: "5 21 * * 1-5"
+    # 北京约 15:15 A股收盘后（中证800开关 + A股扫描）
+    - cron: "15 7 * * 1-5"
   workflow_dispatch:
 
 jobs:
@@ -81,5 +83,38 @@ jobs:
             echo "No close-scan changes."
           else
             git commit -m "chore(alerts): close scans + 究公司 $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+  ashare-csi800:
+    # 北京约 15:15（A股收盘后）+ 手动
+    if: github.event.schedule == '15 7 * * 1-5' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pandas numpy yfinance
+
+      - name: CSI800 regime + A-share tonight
+        run: |
+          python3 scripts/csi800_regime_daily.py --json
+          python3 scripts/screen_ashare_tonight.py --json
+
+      - name: Commit A-share alerts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/alerts/csi800_regime_* scripts/alerts/screen_ashare_tonight_*
+          if git diff --staged --quiet; then
+            echo "No A-share changes."
+          else
+            git commit -m "chore(alerts): CSI800 switch + A-share screen $(date -u +%Y-%m-%d)"
             git push
           fi

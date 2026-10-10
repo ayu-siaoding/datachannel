@@ -103,6 +103,23 @@ UTC **21:05** 收盘 job 会一并提交（需 Actions 开启）。
 
 ---
 
+## 中证800 仓位开关 + A股今日可买
+
+先看宽基温度（箱体 + 日 MA50/MA250 → **布局 / 精选 / 减仓**），再看个股限价。
+
+```bash
+python3 scripts/csi800_regime_daily.py --json
+python3 scripts/screen_ashare_tonight.py --json   # 开头已嵌入开关一行
+```
+
+| 文件 | 说明 |
+|------|------|
+| **`csi800_regime_latest.md`** | 中证800 箱体位置、均线、仓位三态 |
+| `csi800_regime_latest.txt` | 一行摘要 |
+| `screen_ashare_tonight_latest.md` | A股观察池 + 开关 |
+
+---
+
 ## 自定义
 
 - 期权监控列表：编辑 `scripts/options_unusual_daily.py` 内 `WATCH`
