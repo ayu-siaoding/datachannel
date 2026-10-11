@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""US equities: tonight buy candidates (永泉/蔡森/KDJ + 不追大阳).
+"""US equities: tonight buy candidates (永泉/蔡森/KDJ + 量/题材/板块三好).
 
 Usage: python3 scripts/screen_us_tonight.py [--json]
 """
@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -15,7 +16,10 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
-# 防御 + 光存观察池 + 常见「准备涨」蓝筹
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from select_3hao import enrich  # noqa: E402
+
+# 防御 + 光存 + AI安全 + 蓝筹
 UNIVERSE = {
     "MRK": "默沙东",
     "NVO": "诺和诺德",
@@ -38,11 +42,16 @@ UNIVERSE = {
     "SMCI": "超微",
     "CRWD": "CrowdStrike",
     "PANW": "Palo Alto",
+    "FTNT": "Fortinet",
+    "ZS": "Zscaler",
     "GOOG": "谷歌",
     "MSFT": "微软",
     "AMZN": "亚马逊",
     "META": "Meta",
     "AAPL": "苹果",
+    "PLTR": "Palantir",
+    "VRT": "Vertiv",
+    "GEV": "GE Vernova",
 }
 
 ALERTS = Path("/workspace/scripts/alerts")
@@ -191,23 +200,31 @@ def main() -> None:
         except Exception:
             continue
         r = analyze(sym, name, h)
-        if r:
-            r["score"] = r["score"] + int(mkt_adj) if not r["veto"] else r["score"]
-            rows.append(r)
+        if not r:
+            continue
+        e3 = enrich(sym, h, r["chg_pct"], market="US")
+        r.update(e3)
+        # 三好加分；缺≥2 项则降为观察（有否决仍否决）
+        if not r["veto"]:
+            r["score"] = r["score"] + int(mkt_adj) + min(3, e3["三好合计"] // 2)
+            if e3["三好缺几"] >= 2 and r["action"] in ("优先挂L2限价", "可挂L1-L2"):
+                r["action"] = "观察"
+                r["tags"] = list(r["tags"]) + ["三好不足"]
+        rows.append(r)
 
     buy = [r for r in rows if r["action"] in ("优先挂L2限价", "可挂L1-L2")]
-    buy.sort(key=lambda x: (-x["score"], x["J"]))
+    buy.sort(key=lambda x: (-x.get("三好合计", 0), -x["score"], x["J"]))
     watch = [r for r in rows if r["action"] == "观察" and not r["veto"]]
-    watch.sort(key=lambda x: (-x["score"], x["J"]))
+    watch.sort(key=lambda x: (-x.get("三好合计", 0), -x["score"], x["J"]))
     no = [r for r in rows if r["veto"]]
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
-        f"# 今晚美股买入扫描（技术面）",
+        f"# 今晚美股买入扫描（技术面 + 三好）",
         f"",
-        f"生成：**{now}** · 规则：J≤85、单日≤+3%不追、周线K>D加分、MA20结构 · **{mkt}**",
+        f"生成：**{now}** · J≤85、不追大阳 · **量好/题材好/板块好** · **{mkt}**",
         f"",
-        f"## 结论（Top 3 适合挂限价）",
+        f"## 结论（Top · 适合挂限价）",
         f"",
     ]
     if not buy:
@@ -219,8 +236,10 @@ def main() -> None:
         lines.extend(
             [
                 f"### {i}. **{r['symbol']}** {r['name']}{veto_s}",
-                f"- 收盘 **{r['close']}** ({r['chg_pct']:+.2f}%) · J={r['J']} K={r['K']} D={r['D']} · 分={r['score']}",
-                f"- **{r['action']}** · 三档限价 **L1 {r['L1']} / L2 {r['L2']} / L3 {r['L3']}**",
+                f"- 收盘 **{r['close']}** ({r['chg_pct']:+.2f}%) · J={r['J']} · 技分={r['score']} · "
+                f"**{r.get('三好标签', '')}**（题材:{r.get('题材名')}）",
+                f"- **{r['action']}** · L1 {r['L1']} / L2 **{r['L2']}** / L3 {r['L3']} · rvol={r.get('rvol')}",
+                f"- {r.get('量注', '')}；{r.get('板块注', '')}",
                 f"- 标签：{', '.join(r['tags']) or '—'}",
                 f"",
             ]

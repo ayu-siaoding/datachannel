@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""A-share tonight/today buy candidates (永泉/蔡森/KDJ + 不追大阳).
+"""A-share tonight/today buy candidates (KDJ + 中证800开关 + 量/题材/板块三好).
 
 Usage: python3 scripts/screen_ashare_tonight.py [--json]
 """
@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,8 +17,10 @@ import pandas as pd
 import yfinance as yf
 
 ALERTS = Path("/workspace/scripts/alerts")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from select_3hao import enrich  # noqa: E402
 
-# 光模块/光纤 + 防御/红利 + 此前相关
+# 光模块/OCS + AI安全 + 防御/红利 + 电力
 UNIVERSE = {
     "300502.SZ": "新易盛",
     "300308.SZ": "中际旭创",
@@ -29,6 +32,11 @@ UNIVERSE = {
     "600522.SS": "中天科技",
     "000063.SZ": "中兴通讯",
     "002475.SZ": "立讯精密",
+    "688561.SS": "奇安信",
+    "300454.SZ": "深信服",
+    "002439.SZ": "启明星辰",
+    "002212.SZ": "天融信",
+    "300369.SZ": "绿盟科技",
     "601318.SS": "中国平安",
     "601088.SS": "中国神华",
     "600036.SS": "招商银行",
@@ -44,6 +52,9 @@ UNIVERSE = {
     "002415.SZ": "海康威视",
     "688981.SS": "中芯国际",
     "688041.SS": "海光信息",
+    "600089.SS": "特变电工",
+    "002028.SZ": "思源电气",
+    "688676.SS": "金盘科技",
 }
 
 
@@ -187,6 +198,15 @@ def main() -> None:
         chg = (px - float(sc.iloc[-2])) / float(sc.iloc[-2]) * 100
         mkt = f"上证 {px:.0f} 日{chg:+.2f}% · {'站上' if px >= float(ma20) else '低于'}MA20"
 
+    # 上证收盘序列作板块相对强弱基准
+    ashare_bench = sh["Close"] if not sh.empty else None
+    ashare_closes: dict[str, pd.Series] = {}
+    for sym in UNIVERSE:
+        try:
+            ashare_closes[sym] = raw[sym]["Close"].dropna()
+        except Exception:
+            pass
+
     rows = []
     for sym, name in UNIVERSE.items():
         try:
@@ -196,21 +216,36 @@ def main() -> None:
         if h.empty or len(h) < 60:
             h = yf.Ticker(sym).history(period="8mo", auto_adjust=True)
         r = analyze(sym, name, h)
-        if r:
-            rows.append(r)
+        if not r:
+            continue
+        e3 = enrich(
+            sym,
+            h,
+            r["chg_pct"],
+            market="A",
+            ashare_closes=ashare_closes,
+            ashare_bench=ashare_bench,
+        )
+        r.update(e3)
+        if not r["veto"]:
+            r["score"] = r["score"] + min(3, e3["三好合计"] // 2)
+            if e3["三好缺几"] >= 2 and r["action"] in ("优先挂L2", "可挂L1-L2"):
+                r["action"] = "观察"
+                r["tags"] = list(r["tags"]) + ["三好不足"]
+        rows.append(r)
 
     buy = [r for r in rows if r["action"] in ("优先挂L2", "可挂L1-L2")]
-    buy.sort(key=lambda x: (-x["score"], x["J"]))
+    buy.sort(key=lambda x: (-x.get("三好合计", 0), -x["score"], x["J"]))
     watch = [r for r in rows if r["action"] == "观察" and not r["veto"]]
-    watch.sort(key=lambda x: (-x["score"], x["J"]))
+    watch.sort(key=lambda x: (-x.get("三好合计", 0), -x["score"], x["J"]))
     no = [r for r in rows if r["veto"]]
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     stance = (csi_regime or {}).get("stance", "—")
     lines = [
-        f"# A股今日可买扫描（技术面）",
+        f"# A股今日可买扫描（技术面 + 三好）",
         f"",
-        f"生成：**{now}** · 规则：J≤85、单日≤+3%不追、回踩MA20加分 · **{mkt}**",
+        f"生成：**{now}** · J≤85、不追大阳 · **量/题材/板块** · **{mkt}**",
         f"",
         f"## ① 中证800 仓位开关（先看这里）",
         f"",
@@ -218,7 +253,7 @@ def main() -> None:
         f"",
         f"→ 当前总开关：**{stance}** · 详情 `scripts/alerts/csi800_regime_latest.md`",
         f"",
-        f"## ② 结论（优先挂限价）",
+        f"## ② 结论（优先挂限价 · 含三好）",
         f"",
     ]
     if not buy:
@@ -231,8 +266,10 @@ def main() -> None:
         lines.extend(
             [
                 f"### {i}. **{r['code']}** {r['name']}",
-                f"- 收 **{r['close']}** ({r['chg_pct']:+.2f}%) · J={r['J']} K={r['K']} · 分={r['score']}",
-                f"- **{r['action']}** · L1 **{r['L1']}** / L2 **{r['L2']}** / L3 **{r['L3']}**",
+                f"- 收 **{r['close']}** ({r['chg_pct']:+.2f}%) · J={r['J']} · 技分={r['score']} · "
+                f"**{r.get('三好标签', '')}**（{r.get('题材名')}）",
+                f"- **{r['action']}** · L1 **{r['L1']}** / L2 **{r['L2']}** / L3 **{r['L3']}** · rvol={r.get('rvol')}",
+                f"- {r.get('量注', '')}；{r.get('板块注', '')}",
                 f"- {', '.join(r['tags']) or '—'}",
                 f"",
             ]

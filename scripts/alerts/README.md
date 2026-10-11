@@ -118,6 +118,11 @@ python3 scripts/screen_ashare_tonight.py --json   # 开头已嵌入开关一行
 | `csi800_regime_latest.txt` | 一行摘要 |
 | `screen_ashare_tonight_latest.md` | A股观察池 + 开关 |
 
+### 选股三好（量 · 题材 · 板块）
+
+规则说明：`scripts/select_rules_3hao.md` · 打分实现：`scripts/select_3hao.py`  
+美股/A股扫描结果中带 **量好/题材好/板块好**；三好缺 ≥2 项会从「可挂」降为「观察」。
+
 ---
 
 ## 自定义
