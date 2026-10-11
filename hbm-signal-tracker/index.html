@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HBM 核心逻辑跟踪看板 · 存储三巨头卖出信号</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">海力士 · 三星 · 美光</p>
+      <h1>HBM 核心逻辑跟踪看板</h1>
+      <p class="subtitle">只要「终极致命信号」或「周期见顶信号」任意一组出现任意 1 条，即触发对应减持 / 清仓建议</p>
+    </header>
+
+    <section class="verdict" id="verdict">
+      <div class="verdict-icon" id="verdictIcon">✅</div>
+      <div class="verdict-body">
+        <div class="verdict-title" id="verdictTitle">核心逻辑健在</div>
+        <div class="verdict-desc" id="verdictDesc">尚未触发任何卖出信号，继续持有并保持跟踪。</div>
+      </div>
+      <button class="reset-btn" id="resetBtn" title="清空所有勾选">重置</button>
+    </section>
+
+    <main class="grid">
+      <!-- 类别一：终极致命信号 -->
+      <section class="card fatal" data-group="fatal">
+        <div class="card-head">
+          <span class="badge badge-fatal">一 · 终极致命信号</span>
+          <h2>出现任意 1 条 → 长期清仓存储三巨头</h2>
+          <p class="card-note">这是彻底推翻 HBM 刚需的核心拐点，比周期回落严重得多。</p>
+        </div>
+        <ul class="signal-list" id="fatalList"></ul>
+      </section>
+
+      <!-- 类别二：周期见顶信号 -->
+      <section class="card cyclical" data-group="cyclical">
+        <div class="card-head">
+          <span class="badge badge-cyclical">二 · 周期见顶信号</span>
+          <h2>出现任意 1 条 → 本轮行情结束，阶段性卖出</h2>
+          <p class="card-note">哪怕技术路线没变，景气周期走完也要撤退，跟踪 4 个领先指标。</p>
+        </div>
+        <ul class="signal-list" id="cyclicalList"></ul>
+      </section>
+
+      <!-- 类别三：假恐慌，不用卖出 -->
+      <section class="card safe" data-group="safe">
+        <div class="card-head">
+          <span class="badge badge-safe">三 · 假恐慌信号（仅供参考）</span>
+          <h2>不影响核心 HBM 底盘，不用卖出</h2>
+          <p class="card-note">这些消息只会冲击边角业务，不改变长期刚需逻辑，无需勾选。</p>
+        </div>
+        <ul class="signal-list safe-list" id="safeList"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>勾选状态会自动保存在本机浏览器（localStorage），仅供个人决策参考，不构成投资建议。</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
