@@ -1,0 +1,33 @@
+生成 2026-10-01 16:56 UTC
+
+======== SPX（含 SPY 换算）========
+SPX 7645.60 | Dominant 7645
+SPX/SPY UPSIDE
+7650 --> 7680 --> 7700
+SPY: 760.77 --> 763.76 --> 765.74
+SPX: 7645 remains near the profile's dominant pin today; upside looks quite limited (first shelf ~4 pts above spot).
+
+SPX/SPY DOWNSIDE
+7625 --> 7610 --> 7600 --> 7590
+SPY: 758.29 --> 756.79 --> 755.80 --> 754.81
+
+======== SPY（ETF 期权 GEX）========
+SPY 760.34 | Dominant 765.00
+SPY UPSIDE
+765.00 --> 767.00 --> 770.00
+SPY: dominant **765.00** · spot **760.34**.
+
+SPY DOWNSIDE
+760.00 --> 755.00 --> 752.00 --> 750.00
+
+======== QQQ（ETF 期权 GEX）========
+QQQ 736.95 | Dominant 737.00
+QQQ UPSIDE
+740.00 --> 743.00 --> 745.00
+QQQ: dominant **737.00** · spot **736.95**.
+
+QQQ DOWNSIDE
+734.00 --> 731.00 --> 729.00 --> 727.00
+
+---
+SPX/SPY/QQQ · scripts/spx_spy_levels_daily.py · GEX 估算，非付费 Profile 原值
