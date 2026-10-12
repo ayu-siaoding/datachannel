@@ -1,6 +1,7 @@
 # 选股三好：量好 · 题材好 · 板块好
 
 与永泉/蔡森/KDJ、中证800开关、不追大阳并行。  
+**总评判标准（白话·专家意见）**：[`expert_selection_criteria.md`](expert_selection_criteria.md) — 后续「能不能买」先对照该文。  
 脚本：`screen_us_tonight.py` / `screen_ashare_tonight.py` 已打分输出。
 
 ## 定义（可执行）

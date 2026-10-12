@@ -118,6 +118,11 @@ python3 scripts/screen_ashare_tonight.py --json   # 开头已嵌入开关一行
 | `csi800_regime_latest.txt` | 一行摘要 |
 | `screen_ashare_tonight_latest.md` | A股观察池 + 开关 |
 
+### 专家评判标准（先看）
+
+白话规则与硬否决：[`../expert_selection_criteria.md`](../expert_selection_criteria.md)  
+大盘先机/趋势/量能 → 宜小不宜大；个股池内 + ≤+3% + J≤85 + 三好；涨幅榜默认不买。
+
 ### 选股三好（量 · 题材 · 板块）
 
 规则说明：`scripts/select_rules_3hao.md` · 打分实现：`scripts/select_3hao.py`  
