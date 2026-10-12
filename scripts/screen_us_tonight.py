@@ -171,17 +171,58 @@ def analyze(sym: str, name: str, hist: pd.DataFrame) -> dict | None:
     }
 
 
-def market_filter() -> tuple[str, float]:
+def market_filter() -> tuple[str, float, dict]:
     spy = yf.Ticker("SPY").history(period="6mo", auto_adjust=True)
     if spy.empty:
-        return "未知", 0.0
+        return "未知", 0.0, {"above_ma20": False, "chg": 0.0, "px": 0.0}
     c = spy["Close"]
     ma20 = c.rolling(20).mean().iloc[-1]
     px = float(c.iloc[-1])
     above = px >= float(ma20)
     chg = (px - float(c.iloc[-2])) / float(c.iloc[-2]) * 100
     label = f"SPY {'站上' if above else '低于'}MA20 ({px:.2f}, 日{chg:+.2f}%)"
-    return label, 1.0 if above else -0.5
+    return label, 1.0 if above else -0.5, {"above_ma20": above, "chg": chg, "px": px}
+
+
+def pendulum_caisen_preamble(mkt_meta: dict, theme_rows: list[dict]) -> list[str]:
+    """鸟叔钟摆 + 蔡森大盘过滤 + 专家标准（白话）。"""
+    above = mkt_meta.get("above_ma20")
+    chg = float(mkt_meta.get("chg") or 0)
+    # 光+存当日急跌家数 → 主题钟摆偏右/冷却
+    theme_syms = {"MU", "COHR", "LITE", "GLW", "AVGO", "MRVL", "STX", "WDC", "AAOI"}
+    theme = [r for r in theme_rows if r["symbol"] in theme_syms]
+    hard_drop = sum(1 for r in theme if r.get("chg_pct", 0) <= -5)
+    mild_drop = sum(1 for r in theme if r.get("chg_pct", 0) <= -2)
+
+    if above and chg >= 0.3 and hard_drop == 0:
+        pendulum = "④ 中性偏乐观（指数稳，主题未崩）→ 可精选回踩，总仓中等"
+        stance = "精选"
+    elif above and hard_drop >= 2:
+        pendulum = "指数偏④、光/存主题偏⑤冷却（多只单日暴跌）→ 主题宜小，不抄底接力"
+        stance = "精选·主题宜小"
+    elif not above and chg < -1:
+        pendulum = "偏③谨慎（SPY 低于 MA20）→ 只做防御/高确定性回踩，总仓宜小"
+        stance = "宜小"
+    elif above:
+        pendulum = "④ 中性（SPY 站上 MA20 但动能一般）→ 宜小不宜大，挂限价不追"
+        stance = "精选"
+    else:
+        pendulum = "③–④ 观望带 → 宜小，优先防御"
+        stance = "宜小"
+
+    lines = [
+        "## ① 钟摆 · 蔡森 · 专家标准（先看）",
+        "",
+        f"- **鸟叔钟摆（宽基）**：{pendulum}",
+        f"- **蔡森大盘过滤**：SPY 相对 MA20 {'多头过滤通过（可做回踩/破底翻收回）' if above else '空头/弱过滤（成功率下降，降仓）'}；"
+        f"单日 {chg:+.2f}%",
+        f"- **主题温度（光+存）**：≤-5% 家数 **{hard_drop}** · ≤-2% 家数 **{mild_drop}**"
+        + (" → 暴跌票「等企稳」，不接飞刀" if hard_drop else " → 无集体暴跌"),
+        f"- **仓位指令**：**{stance}** · 单只≤20% · 光+存合计≤40% · 优先 **L2** · 单日>+3% / J>85 不追",
+        f"- 细则：`scripts/expert_selection_criteria.md`",
+        "",
+    ]
+    return lines
 
 
 def main() -> None:
@@ -191,7 +232,7 @@ def main() -> None:
 
     syms = list(UNIVERSE.keys())
     raw = yf.download(syms, period="8mo", group_by="ticker", auto_adjust=True, progress=False, threads=True)
-    mkt, mkt_adj = market_filter()
+    mkt, mkt_adj, mkt_meta = market_filter()
 
     rows = []
     for sym, name in UNIVERSE.items():
@@ -220,13 +261,18 @@ def main() -> None:
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines = [
-        f"# 今晚美股买入扫描（技术面 + 三好）",
+        f"# 今晚美股买入扫描（钟摆 · 蔡森 · KDJ · 三好）",
         f"",
         f"生成：**{now}** · J≤85、不追大阳 · **量好/题材好/板块好** · **{mkt}**",
         f"",
-        f"## 结论（Top · 适合挂限价）",
-        f"",
     ]
+    lines.extend(pendulum_caisen_preamble(mkt_meta, rows))
+    lines.extend(
+        [
+            f"## ② 结论（Top · 适合挂限价）",
+            f"",
+        ]
+    )
     if not buy:
         lines.append("_当前无「强共振」标的；以下观察池相对最好，或只挂 L2/L3 不接大阳。_")
         buy = watch[:5]
@@ -245,7 +291,7 @@ def main() -> None:
             ]
         )
 
-    lines.extend(["## 主题仓（光+存）Tonight", ""])
+    lines.extend(["## ③ 主题仓（光+存）Tonight", ""])
     theme = [r for r in rows if r["symbol"] in {"MU", "COHR", "LITE", "GLW", "AVGO", "MRVL", "STX", "WDC", "AAOI"}]
     for r in sorted(theme, key=lambda x: -x["score"]):
         lines.append(
@@ -253,11 +299,26 @@ def main() -> None:
             + (f"（{';'.join(r['veto'])}）" if r["veto"] else f" · L2≈{r['L2']}")
         )
 
-    lines.extend(["", "## 已否决（勿追）", ""])
+    lines.extend(["", "## ④ 已否决（勿追）", ""])
     for r in sorted(no, key=lambda x: x["symbol"])[:12]:
         lines.append(f"- {r['symbol']}: {', '.join(r['veto'])}")
 
-    lines.extend(["", "---", "`scripts/screen_us_tonight.py` · 非投资建议"])
+    # 观察池补强（可挂为空时已并入 Top；仍列出次优）
+    if watch:
+        lines.extend(["", "## ⑤ 观察（未到可挂，可记 L2）", ""])
+        for r in watch[:6]:
+            lines.append(
+                f"- **{r['symbol']}** J={r['J']} {r['chg_pct']:+.2f}% · "
+                f"{r.get('三好标签', '')} · L2≈{r['L2']}"
+            )
+
+    lines.extend(
+        [
+            "",
+            "---",
+            "`scripts/screen_us_tonight.py` · 钟摆/蔡森/KDJ/三好 · 详见 `expert_selection_criteria.md` · 非投资建议",
+        ]
+    )
     md = "\n".join(lines)
 
     ALERTS.mkdir(parents=True, exist_ok=True)
@@ -267,7 +328,15 @@ def main() -> None:
 
     print(md)
     if args.json:
-        payload = {"generated_at": now, "market": mkt, "top": buy[:5], "theme": theme, "all": rows}
+        payload = {
+            "generated_at": now,
+            "market": mkt,
+            "market_meta": mkt_meta,
+            "top": buy[:5],
+            "watch": watch[:8],
+            "theme": theme,
+            "all": rows,
+        }
         p = ALERTS / f"screen_us_tonight_{slug}.json"
         p.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"\n[written] {p}")
