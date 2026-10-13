@@ -53,8 +53,12 @@ MACD： ████ 绿柱持续      ████
 ```bash
 pip install yfinance pandas numpy
 python3 tools/weekly_macd_surge_screen.py
-python3 tools/weekly_macd_surge_screen.py --market us --save reports/weekly_surge.md
+python3 tools/weekly_macd_surge_screen.py --save reports/weekly_surge.md
 python3 tools/weekly_macd_surge_screen.py --tickers TSM NVDA META AMD AVGO
+
+# 红柱第一天 + DIF水上 + 大资金进/小资金出
+python3 tools/macd_first_red_flow_screen.py
+python3 tools/macd_first_red_flow_screen.py --tf weekly --relax
 ```
 
 Agent 口令：
