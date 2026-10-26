@@ -4,7 +4,7 @@ A 股短线题材工具与相关脚本。
 
 ## 开盘前 10 分钟自动扫描（排除北交所）
 
-每个交易日 **09:20（Asia/Shanghai）** 运行，按「溢价 / 集中 / 共识」输出 **观察池股票代码**（空间龙、中军、补涨）。
+每个交易日 **09:20（Asia/Shanghai）** 运行，按短线题材方法（见 `docs/SHORT_TERM_THEME_METHOD.md`，参考 [X 视频](https://x.com/cj3214567667/status/2114717684827037856/video/1)）输出 **观察池股票代码**（空间龙、中军、补涨）。
 
 ### 一次性安装
 
@@ -25,6 +25,9 @@ MODE=dragon ./scripts/run_premarket.sh
 
 # 指定交易日、保存 JSON
 python3 scripts/premarket_scan.py --date 2026-10-27 --out reports/premarket.json
+
+# 仅输出代码（方便粘贴自选）
+python3 scripts/premarket_scan.py --method short-theme --codes-only
 ```
 
 ### 定时任务（本机 crontab）

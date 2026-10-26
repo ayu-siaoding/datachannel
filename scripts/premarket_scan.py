@@ -10,6 +10,9 @@ A股短线题材 · 开盘前 10 分钟扫描（排除北交所）
   python3 scripts/premarket_scan.py --date 20251027
 
 建议在 Asia/Shanghai 09:20 运行（见 scripts/run_premarket.sh 与 README）。
+
+方法文档：docs/SHORT_TERM_THEME_METHOD.md
+参考链接：https://x.com/cj3214567667/status/2114717684827037856/video/1
 """
 
 from __future__ import annotations
@@ -29,6 +32,12 @@ import requests
 
 SH_TZ = ZoneInfo("Asia/Shanghai")
 EM_UT = "7eea3edcaed734bea9cbfc24409ed989"
+METHOD_SOURCE_URL = (
+    "https://x.com/cj3214567667/status/2114717684827037856/video/1"
+)
+MAX_CONCEPT_TAGS = 10  # 概念堆砌 → 降权（杂毛/万金油）
+TAIL_BOARD_RELAY = 6  # relay 模式连板上限，视为尾声
+
 EM_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -230,12 +239,41 @@ def filter_universe(df: pd.DataFrame) -> pd.DataFrame:
     return out.loc[mask].reset_index(drop=True)
 
 
+def _concept_tag_count(row: pd.Series) -> int:
+    for col in ("所属概念", "概念个数", "涨停原因"):
+        if col not in row.index or pd.isna(row[col]):
+            continue
+        val = row[col]
+        if col == "概念个数":
+            try:
+                return int(val)
+            except (TypeError, ValueError):
+                pass
+        text = str(val)
+        if "【@" in text:
+            return text.count("【@")
+        if "." in text:
+            return len([p for p in text.split(".") if p.strip()])
+    return 0
+
+
 def theme_key(row: pd.Series) -> str:
+    """题材名：优先短线主题/涨停原因首段，其次行业（主线按「题」不按「今日涨幅」）。"""
+    for col in ("短线主题名称", "涨停原因"):
+        if col in row.index and pd.notna(row[col]) and str(row[col]).strip():
+            part = str(row[col]).split(".")[0].split("；")[0].strip()
+            if part:
+                return part
     if "所属行业" in row and pd.notna(row["所属行业"]) and str(row["所属行业"]).strip():
         return str(row["所属行业"]).strip()
-    if "短线主题名称" in row and pd.notna(row["短线主题名称"]):
-        return str(row["短线主题名称"]).split(".")[0]
     return "其他"
+
+
+def concept_penalty(row: pd.Series) -> float:
+    n = _concept_tag_count(row)
+    if n <= MAX_CONCEPT_TAGS:
+        return 0.0
+    return float(n - MAX_CONCEPT_TAGS) * 2.0
 
 
 def score_themes(df: pd.DataFrame) -> list[tuple[str, int, float]]:
@@ -251,6 +289,24 @@ def score_themes(df: pd.DataFrame) -> list[tuple[str, int, float]]:
         stats.append((k, len(lbs), sum(lbs) + max(lbs) * 2))
     stats.sort(key=lambda x: (x[2], x[1]), reverse=True)
     return stats
+
+
+def today_bid_leaders(zt: pd.DataFrame, top_n: int = 5) -> list[dict[str, Any]]:
+    """今日竞价涨幅前列（仅作「非主线参考」，不自动进观察池）。"""
+    if zt.empty or "竞价涨跌幅" not in zt.columns:
+        return []
+    sub = zt.dropna(subset=["竞价涨跌幅"]).sort_values("竞价涨跌幅", ascending=False)
+    rows = []
+    for _, row in sub.head(top_n).iterrows():
+        rows.append(
+            {
+                "代码": row["代码"],
+                "名称": row.get("名称", ""),
+                "竞价涨跌幅": round(float(row["竞价涨跌幅"]), 2),
+                "备注": "今日竞价强≠主线，慎追",
+            }
+        )
+    return rows
 
 
 def _连板列(df: pd.DataFrame) -> pd.Series:
@@ -274,9 +330,9 @@ def pick_roles(df: pd.DataFrame, main_theme: str) -> dict[str, list[str]]:
         else pd.Series(0, index=sub.index, dtype=float)
     )
 
-    dragon = sub.sort_values(
-        ["昨日连板数", "成交额"], ascending=[False, False]
-    ).head(2)["代码"].tolist()
+    sub["_纯度罚分"] = sub.apply(concept_penalty, axis=1)
+    sub["_龙分"] = sub["昨日连板数"] * 10 + sub["成交额"] / 1e8 - sub["_纯度罚分"]
+    dragon = sub.sort_values("_龙分", ascending=False).head(2)["代码"].tolist()
 
     rest = sub[~sub["代码"].isin(dragon)]
     mid = rest.sort_values("成交额", ascending=False).head(2)["代码"].tolist()
@@ -305,7 +361,10 @@ def premium_label(zdf: float, mode: str) -> str:
 
 
 def build_watchlist(
-    df: pd.DataFrame, roles: dict[str, list[str]], mode: str
+    df: pd.DataFrame,
+    roles: dict[str, list[str]],
+    mode: str,
+    bid_leaders: list[dict[str, Any]],
 ) -> list[str]:
     """合并去重后的代码观察池。"""
     codes: list[str] = []
@@ -327,9 +386,12 @@ def build_watchlist(
         elif code in roles.get("补涨", []):
             if zdf >= 3:
                 spot_ok.add(code)
+    leader_codes = {x["代码"] for x in bid_leaders}
     ordered = []
     seen = set()
     for c in codes:
+        if c in leader_codes and c not in roles.get("空间龙", []):
+            continue
         if c in spot_ok and c not in seen:
             ordered.append(c)
             seen.add(c)
@@ -342,7 +404,7 @@ def build_watchlist(
     return ordered
 
 
-def run_scan(trade_day: date, mode: str) -> dict[str, Any]:
+def run_scan(trade_day: date, mode: str, method: str) -> dict[str, Any]:
     zt_raw = fetch_yesterday_zt_pool(trade_day)
     zt = filter_universe(zt_raw)
     spot = fetch_spot_tx()
@@ -350,8 +412,17 @@ def run_scan(trade_day: date, mode: str) -> dict[str, Any]:
 
     themes = score_themes(zt)
     main_theme = themes[0][0] if themes else "（无主题）"
+    bid_leaders = today_bid_leaders(zt)
     roles = pick_roles(zt, main_theme)
-    watch = build_watchlist(zt, roles, mode)
+    watch = build_watchlist(zt, roles, mode, bid_leaders)
+
+    if method == "short-theme" and mode == "relay":
+        zt = zt.copy()
+        zt["昨日连板数"] = _连板列(zt)
+        lb_map = zt.set_index("代码")["昨日连板数"]
+        watch = [
+            c for c in watch if c not in lb_map.index or float(lb_map.loc[c]) < TAIL_BOARD_RELAY
+        ]
 
     premium_rows = []
     for _, row in zt.iterrows():
@@ -374,12 +445,15 @@ def run_scan(trade_day: date, mode: str) -> dict[str, Any]:
         "扫描时间": datetime.now(SH_TZ).strftime("%Y-%m-%d %H:%M:%S %Z"),
         "交易日": trade_day.isoformat(),
         "上一交易日": prev_trade_date(trade_day).isoformat(),
+        "方法": method,
+        "方法来源": METHOD_SOURCE_URL,
         "模式": mode,
         "昨涨停数量_过滤后": len(zt),
         "主题材": main_theme,
         "主题排名": [{"主题": t, "家数": n, "强度分": s} for t, n, s in themes[:8]],
         "角色": roles,
         "观察池代码": watch,
+        "今日竞价最强_非主线参考": bid_leaders,
         "昨日涨停溢价": premium_rows,
         "数据源": {
             "昨涨停池": "eastmoney getYesterdayZTPool / akshare 备用",
@@ -402,6 +476,10 @@ def print_report(result: dict[str, Any]) -> None:
     for role, codes in result["角色"].items():
         print(f"  {role}: {','.join(codes) if codes else '—'}")
     print(f"\n## 观察池（合并）\n{','.join(result['观察池代码']) or '—'}")
+    print("\n## 今日竞价最强（非主线参考，慎追）")
+    for row in result.get("今日竞价最强_非主线参考", [])[:5]:
+        print(f"  {row['代码']} {row['名称']}  竞价{row['竞价涨跌幅']:+.2f}%")
+    print(f"\n方法: {result.get('方法')} | 来源: {result.get('方法来源')}")
     print("\n## 昨日涨停 · 竞价溢价（前 20）")
     for row in result["昨日涨停溢价"][:20]:
         z = row["竞价涨跌幅"]
@@ -420,6 +498,17 @@ def main() -> int:
         choices=("relay", "dragon"),
         default="relay",
         help="relay=1～3板接力溢价；dragon=龙头分歧",
+    )
+    parser.add_argument(
+        "--method",
+        choices=("short-theme", "legacy"),
+        default="short-theme",
+        help="short-theme=视频/口述短线题材规则；legacy=早期行业聚合",
+    )
+    parser.add_argument(
+        "--codes-only",
+        action="store_true",
+        help="仅输出观察池代码（逗号分隔）",
     )
     parser.add_argument(
         "--date",
@@ -447,7 +536,11 @@ def main() -> int:
         as_of = datetime.now(SH_TZ).date()
 
     trade_day = resolve_trade_date(as_of)
-    result = run_scan(trade_day, args.mode)
+    result = run_scan(trade_day, args.mode, args.method)
+
+    if args.codes_only:
+        print(",".join(result["观察池代码"]))
+        return 0
 
     payload = json.dumps(result, ensure_ascii=False, indent=2)
     if args.out:
