@@ -6,4 +6,7 @@ export TZ=Asia/Shanghai
 export PATH="${HOME}/.local/bin:${PATH}"
 cd "$ROOT"
 python3 -m pip install -q -r requirements.txt 2>/dev/null || true
-python3 "$ROOT/scripts/premarket_scan.py" --mode "${MODE:-relay}" "$@"
+python3 "$ROOT/scripts/premarket_scan.py" \
+  --method "${METHOD:-short-theme}" \
+  --mode "${MODE:-relay}" \
+  "$@"

@@ -30,14 +30,29 @@ python3 scripts/premarket_scan.py --date 2026-10-27 --out reports/premarket.json
 python3 scripts/premarket_scan.py --method short-theme --codes-only
 ```
 
-### 定时任务（本机 crontab）
+### 定时任务（本机 crontab，推荐）
 
-```cron
-# 周一至周五 09:20 上海时间
-20 9 * * 1-5 cd /path/to/datachannel && ./scripts/run_premarket.sh >> logs/premarket.log 2>&1
+每天 **09:20** 自动把代码写入 `outputs/codes_YYYYMMDD.txt`：
+
+```bash
+chmod +x scripts/daily_codes.sh
+# 编辑 scripts/crontab.example，把路径改成你的仓库绝对路径后：
+crontab -e
 ```
 
-说明：cron 使用系统时区时，请将系统时区设为 `Asia/Shanghai`，或在 crontab 行首设置 `CRON_TZ=Asia/Shanghai`（视系统而定）。
+```cron
+CRON_TZ=Asia/Shanghai
+20 9 * * 1-5 /path/to/datachannel/scripts/daily_codes.sh
+```
+
+手动跑一次（与定时任务相同）：
+
+```bash
+./scripts/daily_codes.sh
+cat outputs/codes_$(date +%Y%m%d).txt
+```
+
+说明：全市场 spot 约 30 秒，建议 **09:19** 启动 cron 或接受 09:20:30 出结果。
 
 ### 输出说明
 
