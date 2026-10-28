@@ -1,0 +1,4 @@
+# 复制到 crontab -e（本机时区设为 Asia/Shanghai，或使用 CRON_TZ）
+# 周一至周五 09:20 跑出观察池代码
+CRON_TZ=Asia/Shanghai
+20 9 * * 1-5 /path/to/datachannel/scripts/daily_codes.sh
